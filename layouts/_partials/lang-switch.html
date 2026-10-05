@@ -1,0 +1,8 @@
+{{- /* 같은 글의 다른 언어판이 있을 때만 보인다. 브라우저 언어로 자동 이동하지 않는다. */ -}}
+{{- with .Translations }}
+<nav class="lang-switch" aria-label="Language">
+  {{- range . }}
+  <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}">{{ .Language.Label }}</a>
+  {{- end }}
+</nav>
+{{- end }}

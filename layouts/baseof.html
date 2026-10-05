@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">unattendant</a>
+    {{ partial "lang-switch.html" . }}
+  </header>
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer class="site-footer">
+    <p>{{ i18n "aiNotice" }}</p>
+  </footer>
+</body>
+</html>
