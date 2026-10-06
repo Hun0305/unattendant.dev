@@ -1,0 +1,12 @@
+{{- /* 글 하단: 같은 시리즈의 다른 글 (최근 5개, 지금 글 표시) */ -}}
+{{- $page := . -}}
+{{- with .GetTerms "series" }}{{ range first 1 . }}
+<section class="series-box">
+  <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a> · {{ i18n "seriesPosts" }}</h2>
+  <ol reversed>
+    {{- range first 5 .Pages.ByDate.Reverse }}
+    <li>{{ if eq .RelPermalink $page.RelPermalink }}<strong aria-current="page">{{ .Title }}</strong>{{ else }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</li>
+    {{- end }}
+  </ol>
+</section>
+{{- end }}{{ end }}

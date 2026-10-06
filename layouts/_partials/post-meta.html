@@ -3,6 +3,8 @@
   {{- if gt .Lastmod.Unix .Date.Unix }}
   · <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "updated" }} {{ .Lastmod | time.Format ":date_long" }}</time>
   {{- end }}
+  {{- with .GetTerms "series" }}{{ range first 1 . }}
+  · <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}{{ end }}
   {{- with .GetTerms "tags" }}
   · {{ range $i, $t := . }}{{ if $i }} {{ end }}<a href="{{ $t.RelPermalink }}">#{{ $t.LinkTitle }}</a>{{ end }}
   {{- end }}

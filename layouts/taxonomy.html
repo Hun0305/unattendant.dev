@@ -1,10 +1,23 @@
 {{ define "main" }}
-<section class="list">
-  <h1>{{ i18n "tags" }}</h1>
-  <ul class="tag-index">
-    {{ range .Data.Terms.Alphabetical }}
-    <li><a href="{{ .Page.RelPermalink }}">#{{ .Page.Title }}</a> <span class="count">{{ .Count }}</span></li>
-    {{ end }}
-  </ul>
-</section>
+{{ if eq .Data.Plural "series" }}
+<h1 class="page-title">{{ i18n "tabSeries" }}</h1>
+<div class="series-grid">
+  {{ range .Pages.ByWeight }}
+  <a class="series-card" href="{{ .RelPermalink }}">
+    <h2>{{ .Title }}</h2>
+    <p>{{ .Description }}</p>
+    <p class="row-meta">{{ i18n "postsCount" (len .Pages) }}{{ range first 1 .Pages.ByDate.Reverse }} · {{ i18n "latest" }} {{ .Date | time.Format ":date_medium" }}{{ end }}</p>
+  </a>
+  {{ end }}
+</div>
+{{ else }}
+<h1 class="page-title">{{ i18n "tags" }}</h1>
+<ul class="tag-cloud">
+  {{ range .Data.Terms.ByCount }}
+  <li><a href="{{ .Page.RelPermalink }}">#{{ .Page.LinkTitle }}</a> <span class="count">{{ .Count }}</span></li>
+  {{ else }}
+  <li class="empty">{{ i18n "noPosts" }}</li>
+  {{ end }}
+</ul>
+{{ end }}
 {{ end }}

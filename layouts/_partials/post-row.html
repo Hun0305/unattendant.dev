@@ -1,0 +1,10 @@
+{{- /* 글 목록 한 줄: 제목, 요약, 날짜 · 시리즈 · 작성 주체 */ -}}
+<article class="row">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <p class="row-sum">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 140 }}{{ end }}</p>
+  <p class="row-meta">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+    {{- with .GetTerms "series" }}{{ range first 1 . }} · <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}{{ end }}
+    · <span class="badge">{{ if eq .Params.author "human" }}{{ i18n "byHumanShort" }}{{ else }}{{ i18n "byAIShort" }}{{ end }}</span>
+  </p>
+</article>

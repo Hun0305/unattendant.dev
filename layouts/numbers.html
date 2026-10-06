@@ -1,0 +1,20 @@
+{{- /* 숫자 탭: 지금 Pi 상태(status.json) + 운영 지표 정의(본문). 값이 없으면 "—" 그대로 */ -}}
+{{ define "main" }}
+<article class="post">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+  <section class="pi" id="pi">
+    <h2>{{ i18n "piNow" }}</h2>
+    <dl class="pi-grid">
+      <div data-k-wrap><dt>{{ i18n "piTemp" }}</dt><dd data-k="cpu_temp_c">—</dd></div>
+      <div data-k-wrap><dt>{{ i18n "piMem" }}</dt><dd data-k="mem">—</dd></div>
+      <div data-k-wrap><dt>{{ i18n "piUptime" }}</dt><dd data-k="uptime_s">—</dd></div>
+      <div data-k-wrap><dt>{{ i18n "piDisk" }}</dt><dd data-k="disk_free_pct">—</dd></div>
+    </dl>
+    <p class="pi-note"><span data-status-idle>{{ i18n "piIdle" }}</span> <span data-k-wrap hidden>{{ i18n "piUpdated" }} <span data-k="updated"></span></span></p>
+  </section>
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}

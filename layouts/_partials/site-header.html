@@ -1,0 +1,17 @@
+{{- /* 메뉴 글 · 시리즈 · 숫자 · 소개. 소개·숫자 페이지는 front matter nav 값으로 활성 탭을 정한다. */ -}}
+{{- $active := "" -}}
+{{- $isTax := in (slice "taxonomy" "term") .Kind -}}
+{{- if .Params.nav }}{{ $active = .Params.nav }}
+{{- else if and $isTax (eq .Data.Plural "series") }}{{ $active = "series" }}
+{{- else if or .IsHome (eq .Section "posts") $isTax }}{{ $active = "posts" }}
+{{- end -}}
+<header class="wrap site-header">
+  <a class="brand" href="{{ site.Home.RelPermalink }}">unattendant</a>
+  <nav class="nav" aria-label="{{ i18n "sections" }}">
+    <a href="{{ site.Home.RelPermalink }}"{{ if eq $active "posts" }} aria-current="page"{{ end }}>{{ i18n "tabPosts" }}</a>
+    <a href="{{ "series/" | relLangURL }}"{{ if eq $active "series" }} aria-current="page"{{ end }}>{{ i18n "tabSeries" }}</a>
+    <a href="{{ "numbers/" | relLangURL }}"{{ if eq $active "numbers" }} aria-current="page"{{ end }}>{{ i18n "tabNumbers" }}</a>
+    <a href="{{ "about/" | relLangURL }}"{{ if eq $active "about" }} aria-current="page"{{ end }}>{{ i18n "tabAbout" }}</a>
+    {{ partial "lang-switch.html" . }}
+  </nav>
+</header>

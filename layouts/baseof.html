@@ -4,15 +4,14 @@
   {{ partial "head.html" . }}
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="{{ site.Home.RelPermalink }}">unattendant</a>
-    {{ partial "lang-switch.html" . }}
-  </header>
-  <main>
+  {{ partial "status-band.html" . }}
+  {{ partial "site-header.html" . }}
+  <main class="wrap">
     {{ block "main" . }}{{ end }}
   </main>
-  <footer class="site-footer">
+  <footer class="wrap site-footer">
     <p>{{ i18n "aiNotice" }}</p>
   </footer>
+  {{ partial "status-script.html" . }}
 </body>
 </html>

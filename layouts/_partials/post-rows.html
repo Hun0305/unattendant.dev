@@ -1,0 +1,12 @@
+{{- /* 인자: dict "page" 페이지(페이지 나누기용) "pages" 글 목록 */ -}}
+{{- $pager := .page.Paginate .pages -}}
+<div class="rows">
+  {{ range $pager.Pages }}{{ partial "post-row.html" . }}{{ else }}<p class="empty">{{ i18n "noPosts" }}</p>{{ end }}
+</div>
+{{ if gt $pager.TotalPages 1 }}
+<nav class="pager">
+  {{ with $pager.Prev }}<a href="{{ .URL }}">← {{ i18n "newer" }}</a>{{ else }}<span></span>{{ end }}
+  <span>{{ $pager.PageNumber }} / {{ $pager.TotalPages }}</span>
+  {{ with $pager.Next }}<a href="{{ .URL }}">{{ i18n "older" }} →</a>{{ else }}<span></span>{{ end }}
+</nav>
+{{ end }}

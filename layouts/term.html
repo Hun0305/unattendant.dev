@@ -1,6 +1,11 @@
 {{ define "main" }}
-<section class="list">
-  <h1>#{{ .Title }}</h1>
-  {{ partial "post-list.html" .Pages }}
-</section>
+{{ if eq .Data.Plural "series" }}
+<p class="page-kicker"><a href="{{ "series/" | relLangURL }}">{{ i18n "tabSeries" }}</a></p>
+<h1 class="page-title">{{ .Title }}</h1>
+{{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+{{ else }}
+<p class="page-kicker"><a href="{{ "tags/" | relLangURL }}">{{ i18n "tags" }}</a></p>
+<h1 class="page-title">#{{ .Title }}</h1>
+{{ end }}
+{{ partial "post-rows.html" (dict "page" . "pages" .Pages) }}
 {{ end }}

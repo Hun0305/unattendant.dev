@@ -1,6 +1,4 @@
 {{ define "main" }}
-<section class="list">
-  <h1>{{ i18n "allPosts" }}</h1>
-  {{ partial "post-list.html" .Pages }}
-</section>
+<h1 class="page-title">{{ i18n "allPosts" }}</h1>
+{{ partial "post-rows.html" (dict "page" . "pages" .Pages) }}
 {{ end }}

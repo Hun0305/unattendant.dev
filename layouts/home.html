@@ -1,17 +1,8 @@
 {{ define "main" }}
-<section class="hero">
-  <h1>unattendant</h1>
+<section class="intro">
   <p class="tagline">{{ site.Params.tagline }}</p>
+  {{ partial "series-chips.html" . }}
 </section>
-<article class="intro">
-  {{ .Content }}
-</article>
-<section class="list">
-  <h2>{{ i18n "recentPosts" }}</h2>
-  {{ $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}
-  {{ partial "post-list.html" (first 10 $posts) }}
-  {{ if gt (len $posts) 10 }}
-  <p><a href="{{ "posts/" | relLangURL }}">{{ i18n "allPosts" }} →</a></p>
-  {{ end }}
-</section>
+{{ $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}
+{{ partial "post-rows.html" (dict "page" . "pages" $posts) }}
 {{ end }}
