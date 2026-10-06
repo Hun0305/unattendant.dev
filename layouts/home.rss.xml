@@ -1,0 +1,65 @@
+{{- /*
+  홈 RSS(/index.xml, /en/index.xml). Hugo v0.167.0 내장 rss.xml을 옮겨 두 곳만 바꿨다.
+  1. 글만 담는다: 내장 템플릿은 site.RegularPages라 소개·숫자 같은 고정 페이지도 글처럼 들어갔다
+  2. lastBuildDate는 담는 글 중 가장 최근 수정일로, 글이 없으면 생략한다
+*/ -}}
+{{- $authorEmail := "" }}
+{{- with site.Params.author }}
+	{{- if reflect.IsMap . }}
+		{{- with .email }}
+			{{- $authorEmail = . }}
+		{{- end }}
+	{{- end }}
+{{- end }}
+
+{{- $authorName := "" }}
+{{- with site.Params.author }}
+	{{- if reflect.IsMap . }}
+		{{- with .name }}
+			{{- $authorName = . }}
+		{{- end }}
+	{{- else }}
+		{{- $authorName = . }}
+	{{- end }}
+{{- end }}
+
+{{- $pages := where site.RegularPages "Section" "in" site.Params.mainSections }}
+{{- $limit := .Site.Config.Services.RSS.Limit }}
+{{- if ge $limit 1 }}
+	{{- $pages = $pages | first $limit }}
+{{- end }}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>{{ .Site.Title }}</title>
+		<link>{{ .Permalink }}</link>
+		<description>Recent content on {{ .Site.Title }}</description>
+		<generator>Hugo</generator>
+		<language>{{ site.Language.Locale }}</language>
+		{{ with $authorEmail }}
+			<managingEditor>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>
+		{{ end }}
+		{{ with $authorEmail }}
+			<webMaster>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</webMaster>
+		{{ end }}
+		{{ with .Site.Copyright }}
+			<copyright>{{ . }}</copyright>
+		{{ end }}
+		{{- range first 1 $pages.ByLastmod.Reverse }}
+			<lastBuildDate>{{ .Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+		{{- end }}
+		{{- with .OutputFormats.Get "RSS" }}
+			{{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+		{{- end }}
+		{{- range $pages }}
+			<item>
+				<title>{{ .Title }}</title>
+				<link>{{ .Permalink }}</link>
+				<pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+				{{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}
+				<guid>{{ .Permalink }}</guid>
+				<description>{{ .Summary | transform.XMLEscape | safeHTML }}</description>
+			</item>
+		{{- end }}
+	</channel>
+</rss>
