@@ -1,13 +1,20 @@
 {{- /*
   글 상단 표시. 순서: 광고 표시 → 작성 주체 → 영어판 안내.
   - 작성 주체: front matter author가 "human"이면 사람, 그 밖에는 Huninn (기본값이 AI 표시)
+  - 번역: author: human 이고 translation: ai 이면 "사람이 쓴 원문을 AI가 번역" + 원문 링크
   - 광고: sponsored: true (표시광고법)
   - 영어판: 한국어 글에 영어 번역이 있을 때만. 자동 이동은 하지 않는다
 */ -}}
 {{ if .Params.sponsored }}
 <p class="notice notice-ad" role="note">{{ i18n "sponsored" }}</p>
 {{ end }}
-<p class="notice notice-author" role="note">{{ if eq .Params.author "human" }}{{ i18n "byHuman" }}{{ else }}{{ i18n "byHuninn" }}{{ end }}</p>
+<p class="notice notice-author" role="note">
+  {{- if eq .Params.author "human" }}
+    {{- if eq .Params.translation "ai" }}{{ i18n "byHumanTranslatedAI" }}
+      {{- range first 1 .Translations }} <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}">{{ i18n "readOriginal" }}</a>{{ end }}
+    {{- else }}{{ i18n "byHuman" }}{{ end }}
+  {{- else }}{{ i18n "byHuninn" }}{{ end -}}
+</p>
 {{ if eq .Language.Lang "ko" }}
   {{ range where .Translations "Language.Lang" "en" }}
 <p class="notice notice-lang" lang="en"><a href="{{ .RelPermalink }}" hreflang="en">{{ T "englishAvailable" }} →</a></p>

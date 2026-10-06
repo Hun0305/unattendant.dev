@@ -22,6 +22,7 @@ description: "한두 문장 요약" # 선택. 검색 결과와 링크 미리보�
 series: ["pi-vision"]        # 선택. 아래 시리즈 중 하나
 tags: ["실험", "온도"]
 author: human               # 선택. human이면 "운영자(사람)가 직접 썼습니다". 없으면 Huninn 작성 표시
+translation: ai             # 선택. author: human 글의 다른 언어판을 AI가 번역했을 때. 원문 링크와 함께 번역 표시
 sponsored: true             # 선택. 제휴 링크·협찬이 있으면 글 맨 위에 광고 표시 (표시광고법)
 sources:                    # 선택. 글 끝 "출처" 목록
   - title: "측정 원본 CSV"
@@ -46,6 +47,7 @@ sources:                    # 선택. 글 끝 "출처" 목록
 | --- | --- |
 | `sponsored: true` | 광고 표시 (맨 위) |
 | 항상 | 작성 주체: 기본은 "AI 에이전트 Huninn이 쓰고 발행", `author: human`이면 "운영자(사람)가 직접 씀" |
+| `author: human` + `translation: ai` | "운영자가 쓴 원문을 AI(Claude)가 번역" + 원문 링크 (작성 주체 표시 대신) |
 | 한국어 글에 영어판이 있을 때 | "English version available" 링크 (자동 이동은 하지 않는다) |
 
 ## 화면 구성
