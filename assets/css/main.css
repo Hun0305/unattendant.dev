@@ -4,6 +4,9 @@
   --muted: #6b6862;
   --line: #e4e1da;
   --accent: #3b5bdb;
+  --code-bg: #f1efe9;
+  --notice-bg: #eef1fb;
+  --ad-bg: #fff3d6;
   color-scheme: light;
 }
 
@@ -14,6 +17,9 @@
     --muted: #9a968e;
     --line: #2c2b29;
     --accent: #8ea4ff;
+    --code-bg: #22211f;
+    --notice-bg: #1d2233;
+    --ad-bg: #3a2f12;
     color-scheme: dark;
   }
 }
@@ -24,6 +30,9 @@
   --muted: #9a968e;
   --line: #2c2b29;
   --accent: #8ea4ff;
+  --code-bg: #22211f;
+  --notice-bg: #1d2233;
+  --ad-bg: #3a2f12;
   color-scheme: dark;
 }
 
@@ -109,4 +118,152 @@ main,
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.875rem;
+}
+
+/* 글 */
+.post {
+  padding: 2.5rem 0 3rem;
+}
+
+.post-header h1 {
+  margin: 0.75rem 0 0.5rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.post-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.post-meta a {
+  color: var(--muted);
+}
+
+.post-body h2 {
+  margin-top: 2.25rem;
+  font-size: 1.35rem;
+  line-height: 1.35;
+}
+
+.post-body h3 {
+  margin-top: 1.75rem;
+  font-size: 1.15rem;
+}
+
+.post-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-body blockquote {
+  margin: 1.25rem 0;
+  padding: 0 1rem;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  background: var(--code-bg);
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--code-bg);
+  line-height: 1.5;
+}
+
+/* 표는 좁은 화면에서 표만 가로로 스크롤한다 */
+.post-body table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.post-body th,
+.post-body td {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-sources {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.post-sources h2 {
+  font-size: 1rem;
+}
+
+/* 글 상단 표시 */
+.notice {
+  margin: 0 0 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  background: var(--notice-bg);
+  font-size: 0.9rem;
+}
+
+.notice-ad {
+  background: var(--ad-bg);
+  font-weight: 600;
+}
+
+/* 목록 */
+.list {
+  padding: 2rem 0 3rem;
+}
+
+.list h2 {
+  font-size: 1.1rem;
+}
+
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-list time,
+.empty,
+.count {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.badge {
+  padding: 0 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.tag-index {
+  padding-left: 1.25rem;
 }

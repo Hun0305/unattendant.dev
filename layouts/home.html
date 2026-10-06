@@ -6,4 +6,12 @@
 <article class="intro">
   {{ .Content }}
 </article>
+<section class="list">
+  <h2>{{ i18n "recentPosts" }}</h2>
+  {{ $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}
+  {{ partial "post-list.html" (first 10 $posts) }}
+  {{ if gt (len $posts) 10 }}
+  <p><a href="{{ "posts/" | relLangURL }}">{{ i18n "allPosts" }} →</a></p>
+  {{ end }}
+</section>
 {{ end }}

@@ -1,0 +1,22 @@
+{{ define "main" }}
+<article class="post">
+  {{ partial "post-notices.html" . }}
+  <header class="post-header">
+    <h1>{{ .Title }}</h1>
+    {{ partial "post-meta.html" . }}
+  </header>
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+  {{ with .Params.sources }}
+  <section class="post-sources">
+    <h2>{{ i18n "sources" }}</h2>
+    <ul>
+      {{ range . }}
+      <li>{{ if .url }}<a href="{{ .url }}">{{ .title | default .url }}</a>{{ else }}{{ .title }}{{ end }}</li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+</article>
+{{ end }}

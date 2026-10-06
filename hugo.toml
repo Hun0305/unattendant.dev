@@ -3,8 +3,14 @@ title = "unattendant"
 defaultContentLanguage = "ko"
 defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
+capitalizeListTitles = false
 disableDefaultLanguageRedirect = true
-disableKinds = ["taxonomy", "term"]
+
+[params]
+  mainSections = ["posts"]
+
+[taxonomies]
+  tag = "tags"
 
 [languages.ko]
   label = "한국어"
