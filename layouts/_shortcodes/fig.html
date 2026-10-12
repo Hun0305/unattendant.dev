@@ -1,0 +1,22 @@
+{{- /*
+  글 폴더(page bundle) 안의 그림 하나를 캡션과 함께 넣는다.
+  {{< fig src="name-diagram.svg" alt="대체 텍스트" caption="설명과 출처" >}}
+  - SVG는 본문에 그대로 넣어 사이트 색(--ink 등)과 다크 모드를 따른다. 대체 텍스트는 SVG 안의 <title>·<desc>에 쓴다
+  - 그 밖의 그림(jpg, png, webp)은 alt가 필수다
+  - 직접 만들지 않은 그림은 caption에 출처와 라이선스를 쓴다 (docs: site/README.md "그림")
+*/ -}}
+{{- $src := .Get "src" -}}
+{{- $res := .Page.Resources.GetMatch $src -}}
+{{- if not $res }}{{ errorf "fig: 글 폴더에 그림이 없다: %q (%s)" $src .Position }}{{ end -}}
+<figure class="fig">
+  {{- if eq $res.MediaType.SubType "svg" }}
+  <div class="fig-svg">{{ $res.Content | safeHTML }}</div>
+  {{- else }}
+  {{- $alt := .Get "alt" | default "" }}
+  {{- if not $alt }}{{ errorf "fig: %q에 alt가 필요하다 (%s)" $src .Position }}{{ end }}
+  <img src="{{ $res.RelPermalink }}" width="{{ $res.Width }}" height="{{ $res.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{- end }}
+  {{- with .Get "caption" }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

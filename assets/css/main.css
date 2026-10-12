@@ -435,6 +435,30 @@ main > .page-title:first-child {
   height: auto;
 }
 
+.fig {
+  margin: 1.75rem 0;
+}
+
+.fig img,
+.fig-svg svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.fig-svg svg {
+  border: 0;
+}
+
+.fig figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--graphite);
+}
+
 .post-body blockquote {
   margin: 1.25rem 0;
   padding: 0 1rem;
