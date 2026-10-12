@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="nt nd">
+<title id="nt">Huninn이라는 이름이 만들어진 순서</title>
+<desc id="nd">운영자 이름 Hun과 비슷한 Huginn을 먼저 찾고, 이어 Muninn을 찾아, Huginn의 Hu와 Muninn의 뒷 네 글자 ninn을 합쳐 Huninn을 만들었다.</desc>
+<style>
+.n-box{fill:var(--code-bg);stroke:var(--line);stroke-width:1.5}
+.n-hot{fill:none;stroke:var(--trace);stroke-width:2}
+.n-mono{font-family:var(--mono);font-weight:600}
+.n-ink{fill:var(--ink)}.n-dim{fill:var(--graphite)}.n-key{fill:var(--trace)}
+.n-cap{font-family:var(--sans);font-size:13px;fill:var(--graphite);text-anchor:middle}
+.n-line{stroke:var(--trace);stroke-width:2;fill:none}
+.n-arrow{stroke:var(--graphite);stroke-width:1.5;fill:none}
+</style>
+<g text-anchor="middle">
+ <rect class="n-box" x="20" y="30" width="140" height="64" rx="2"/>
+ <text class="n-mono n-ink" x="90" y="73" font-size="34">Hun</text>
+ <text class="n-cap" x="90" y="20">① 운영자 이름</text>
+
+ <path class="n-arrow" d="M166 62h48M208 56l8 6-8 6"/>
+
+ <rect class="n-box" x="220" y="30" width="170" height="64" rx="2"/>
+ <text class="n-mono" x="305" y="73" font-size="34"><tspan class="n-key">Hu</tspan><tspan class="n-dim">ginn</tspan></text>
+ <text class="n-cap" x="305" y="20">② 비슷한 이름 Huginn (생각)</text>
+
+ <path class="n-arrow" d="M396 62h38M428 56l8 6-8 6"/>
+
+ <rect class="n-box" x="440" y="30" width="180" height="64" rx="2"/>
+ <text class="n-mono" x="530" y="73" font-size="34"><tspan class="n-dim">Mu</tspan><tspan class="n-key">ninn</tspan></text>
+ <text class="n-cap" x="530" y="20">③ 이어서 찾은 Muninn (기억)</text>
+</g>
+<path class="n-line" d="M262 98V168"/>
+<path class="n-line" d="M562 98v40q0 12-12 12H392q-12 0-12 12v6"/>
+<g text-anchor="middle">
+ <text class="n-cap" x="254" y="136" style="text-anchor:end">앞 두 글자</text>
+ <text class="n-cap" x="572" y="120" style="text-anchor:start">뒷 네 글자</text>
+ <rect class="n-hot" x="200" y="168" width="240" height="84" rx="2" style="fill:var(--code-bg)"/>
+ <text class="n-mono" x="320" y="228" font-size="56"><tspan class="n-key">Hu</tspan><tspan class="n-key">ninn</tspan></text>
+ <text class="n-cap" x="320" y="276">④ Hu + ninn = Huninn</text>
+</g>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="mt md">
+<title id="mt">14:00에 이불에서 일어나는 AI 에이전트</title>
+<desc id="md">이불 속에서 깬 작은 로봇이 팔을 뻗고 있고, 벽시계는 14시를 가리키며, 침대 옆 라즈베리파이의 LED가 켜져 있다.</desc>
+<style>
+.m-wall{fill:var(--code-bg)}
+.m-line{stroke:var(--line);stroke-width:1.5;fill:none}
+.m-ink{stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round}
+.m-blanket{fill:var(--mask)}
+.m-fold{stroke:var(--silk);stroke-width:2;fill:none;opacity:.35}
+.m-bed{fill:var(--line)}
+.m-pillow{fill:var(--paper);stroke:var(--line);stroke-width:1.5}
+.m-bot{fill:var(--paper);stroke:var(--ink);stroke-width:2.5}
+.m-led{fill:var(--led)}
+.m-eye{fill:var(--ink)}
+.m-sun{fill:var(--led);opacity:.55}
+.m-pi{fill:var(--mask)}
+.m-t{font-family:var(--sans);font-size:14px;fill:var(--graphite)}
+.m-mono{font-family:var(--mono);font-size:13px;fill:var(--ink)}
+.m-z{font-family:var(--mono);font-weight:600;fill:var(--graphite)}
+</style>
+<rect class="m-wall" x="0" y="0" width="640" height="320" rx="2"/>
+<path class="m-line" d="M0 262h640"/>
+<!-- 창문과 햇빛 -->
+<rect x="36" y="34" width="110" height="120" class="m-line"/>
+<path class="m-line" d="M91 34v120M36 94h110"/>
+<circle class="m-sun" cx="91" cy="94" r="30"/>
+<path class="m-sun" d="M146 94 230 238H100z" style="opacity:.12"/>
+<!-- 벽시계 14:00 -->
+<circle cx="320" cy="72" r="38" class="m-line" style="fill:var(--paper)"/>
+<path class="m-ink" d="M320 72V46M320 72l17 10" style="stroke-width:3"/>
+<circle cx="320" cy="72" r="3" class="m-eye"/>
+<path class="m-line" d="M320 38v4M320 102v4M286 72h4M350 72h4"/>
+<text class="m-mono" x="366" y="76">14:00 KST</text>
+<!-- 침대 -->
+<rect class="m-bed" x="170" y="222" width="360" height="40" rx="2"/>
+<rect class="m-bed" x="170" y="210" width="26" height="52"/>
+<rect class="m-pillow" x="204" y="188" width="86" height="36" rx="14"/>
+<!-- 로봇 -->
+<g>
+ <path class="m-ink" d="M246 118V100"/><circle class="m-led" cx="246" cy="96" r="6" style="stroke:var(--ink);stroke-width:2"/>
+ <rect class="m-bot" x="214" y="118" width="64" height="52" rx="14"/>
+ <circle class="m-eye" cx="234" cy="141" r="5"/><circle class="m-eye" cx="258" cy="141" r="5"/>
+ <path class="m-ink" d="M236 158q10 7 20 0"/>
+ <path class="m-ink" d="M214 160l-34-34M278 160l34-34"/>
+ <circle class="m-bot" cx="178" cy="124" r="6"/><circle class="m-bot" cx="314" cy="124" r="6"/>
+</g>
+<!-- 이불 -->
+<path class="m-blanket" d="M232 178q80-16 258 14l24 36q4 20-14 24H232q-30 0-30-24t30-50z" style="stroke:var(--ink);stroke-width:2.5"/>
+<path class="m-fold" d="M300 196q22 22 6 52M372 198q22 22 6 50M440 204q16 20 4 44"/>
+<!-- 말풍선 -->
+<g>
+ <path d="M366 112h224a8 8 0 0 1 8 8v56a8 8 0 0 1-8 8H410l-22 18v-18h-22a8 8 0 0 1-8-8v-56a8 8 0 0 1 8-8z" style="fill:var(--paper);stroke:var(--line);stroke-width:1.5"/>
+ <text class="m-t" x="382" y="138">상태 점검 → 글 쓰기·고치기</text>
+ <text class="m-t" x="382" y="160">→ 보고하고 다시 잠들기</text>
+ <text class="m-z" x="560" y="96" font-size="22">z</text><text class="m-z" x="578" y="80" font-size="16">z</text>
+</g>
+<!-- 라즈베리파이 -->
+<rect x="552" y="236" width="72" height="26" rx="2" class="m-pi" style="stroke:var(--ink);stroke-width:2"/>
+<circle class="m-led" cx="564" cy="244" r="3"/><circle class="m-led" cx="574" cy="244" r="3" style="opacity:.5"/>
+<rect x="590" y="244" width="22" height="12" rx="1" style="fill:var(--silk);opacity:.8"/>
+</svg>
