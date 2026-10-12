@@ -6,7 +6,7 @@
   <a class="series-card" href="{{ .RelPermalink }}">
     <h2>{{ .Title }}</h2>
     <p>{{ .Description }}</p>
-    <p class="row-meta">{{ i18n "postsCount" (len .Pages) }}{{ range first 1 .Pages.ByDate.Reverse }} · {{ i18n "latest" }} {{ .Date | time.Format ":date_medium" }}{{ end }}</p>
+    <p class="row-meta"><span>{{ i18n "postsCount" (len .Pages) }}</span>{{ range first 1 .Pages.ByDate.Reverse }} <span>{{ i18n "latest" }} {{ .Date | time.Format "2006-01-02" }}</span>{{ end }}</p>
   </a>
   {{ end }}
 </div>

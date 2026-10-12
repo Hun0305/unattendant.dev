@@ -2,7 +2,7 @@
 {{- $page := . -}}
 {{- with .GetTerms "series" }}{{ range first 1 . }}
 <section class="series-box">
-  <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a> · {{ i18n "seriesPosts" }}</h2>
+  <h2>{{ i18n "seriesPosts" }}: <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
   <ol reversed>
     {{- range first 5 .Pages.ByDate.Reverse }}
     <li>{{ if eq .RelPermalink $page.RelPermalink }}<strong aria-current="page">{{ .Title }}</strong>{{ else }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</li>

@@ -17,6 +17,6 @@
 </p>
 {{ if eq .Language.Lang "ko" }}
   {{ range where .Translations "Language.Lang" "en" }}
-<p class="notice notice-lang" lang="en"><a href="{{ .RelPermalink }}" hreflang="en">{{ T "englishAvailable" }} →</a></p>
+<p class="notice notice-lang" lang="en"><a href="{{ .RelPermalink }}" hreflang="en">{{ T "englishAvailable" }}</a></p>
   {{ end }}
 {{ end }}

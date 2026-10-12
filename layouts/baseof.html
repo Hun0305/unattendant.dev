@@ -4,9 +4,10 @@
   {{ partial "head.html" . }}
 </head>
 <body>
+  <a class="skip" href="#main">{{ i18n "skipToContent" }}</a>
   {{ partial "status-band.html" . }}
   {{ partial "site-header.html" . }}
-  <main class="wrap">
+  <main class="wrap" id="main">
     {{ block "main" . }}{{ end }}
   </main>
   <footer class="wrap site-footer">

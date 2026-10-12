@@ -1,48 +1,52 @@
+/* 토큰: 이름과 근거는 DESIGN.md. 기판(띠)과 데이터시트(본문) */
 :root {
-  --bg: #fbfaf7;
-  --fg: #1d1c1a;
-  --muted: #6b6862;
-  --line: #e4e1da;
-  --accent: #3b5bdb;
-  --code-bg: #f1efe9;
-  --notice-bg: #eef1fb;
-  --ad-bg: #fff3d6;
-  --band: #1d1c1a;
-  --band-fg: #f2efe8;
-  --ok: #3ddc84;
-  --stale: #9a968e;
+  --paper: #f7f8f6;
+  --ink: #141716;
+  --graphite: #5b6360;
+  --trace: #1a6b45;
+  --mask: #1d5b3d;
+  --silk: #f3f5ef;
+  --led: #b8f34a;
+  --led-off: #8fa397;
+  --line: #d9dedb;
+  --code-bg: #f2f4f3;
+  --notice-bg: #eef3f0;
+  --ad-bg: #fff1c7;
+  --radius: 2px;
+  --sans: "IBM Plex Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --mono: "IBM Plex Mono", "IBM Plex Sans KR", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #151514;
-    --fg: #e9e7e2;
-    --muted: #9a968e;
-    --line: #2c2b29;
-    --accent: #8ea4ff;
-    --code-bg: #22211f;
-    --notice-bg: #1d2233;
+    --paper: #111513;
+    --ink: #e8ebe9;
+    --graphite: #9aa5a0;
+    --trace: #7fd0a4;
+    --mask: #173d2b;
+    --silk: #eef2ec;
+    --led-off: #6f8378;
+    --line: #2a322e;
+    --code-bg: #1b211e;
+    --notice-bg: #18221d;
     --ad-bg: #3a2f12;
-    --band: #26251f;
-    --band-fg: #e9e7e2;
-    --stale: #6b6862;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #151514;
-  --fg: #e9e7e2;
-  --muted: #9a968e;
-  --line: #2c2b29;
-  --accent: #8ea4ff;
-  --code-bg: #22211f;
-  --notice-bg: #1d2233;
+  --paper: #111513;
+  --ink: #e8ebe9;
+  --graphite: #9aa5a0;
+  --trace: #7fd0a4;
+  --mask: #173d2b;
+  --silk: #eef2ec;
+  --led-off: #6f8378;
+  --line: #2a322e;
+  --code-bg: #1b211e;
+  --notice-bg: #18221d;
   --ad-bg: #3a2f12;
-  --band: #26251f;
-  --band-fg: #e9e7e2;
-  --stale: #6b6862;
   color-scheme: dark;
 }
 
@@ -58,17 +62,43 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
   font-size: 1.0625rem;
-  line-height: 1.75;
+  line-height: 1.8;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 
 a {
-  color: var(--accent);
+  color: var(--trace);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--trace);
+  outline-offset: 2px;
+}
+
+.band :focus-visible {
+  outline-color: var(--silk);
+}
+
+/* 키보드로 처음 탭하면 나타나는 본문 건너뛰기 */
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -3rem;
+  z-index: 1;
+  padding: 0.4rem 0.75rem;
+  background: var(--paper);
+  color: var(--trace);
+}
+
+.skip:focus {
+  top: 0.5rem;
 }
 
 [hidden] {
@@ -83,9 +113,10 @@ a {
 }
 
 /* 상태 띠: 모든 페이지 맨 위 */
+/* 상태 띠: 솔더마스크 바탕에 실크스크린 글자. 사이트의 유일한 시그니처 */
 .band {
-  background: var(--band);
-  color: var(--band-fg);
+  background: var(--mask);
+  color: var(--silk);
   font-size: 0.82rem;
   line-height: 1.5;
 }
@@ -102,13 +133,20 @@ a {
   display: contents;
 }
 
-.band b {
+/* 고정폭은 숫자·날짜에만. 한글은 고정폭 공백이 넓어 띄엄띄엄 보인다 */
+.band b,
+.band-time,
+.row-meta time,
+.post-meta time,
+.chips span,
+.pi-grid dd {
+  font-family: var(--mono);
   font-variant-numeric: tabular-nums;
 }
 
 .band-link {
   margin-left: auto;
-  color: var(--band-fg);
+  color: var(--silk);
   opacity: 0.8;
   text-decoration: none;
 }
@@ -117,15 +155,23 @@ a {
   opacity: 1;
 }
 
+/* 상태 점 = 보드의 ACT LED. 꺼짐은 속 빈 원이라 색 없이도 구분된다. 깜빡이지 않는다 */
 .dot {
-  width: 0.5rem;
-  height: 0.5rem;
+  flex: 0 0 auto;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1.5px solid var(--led-off);
   border-radius: 50%;
-  background: var(--stale);
 }
 
 .dot[data-state="ok"] {
-  background: var(--ok);
+  border-color: var(--led);
+  background: var(--led);
+  box-shadow: 0 0 0 2px rgb(184 243 74 / 0.18), 0 0 8px rgb(184 243 74 / 0.55);
+}
+
+.band-time {
+  opacity: 0.8;
 }
 
 /* 머리글과 메뉴 */
@@ -139,10 +185,11 @@ a {
 }
 
 .brand {
-  color: var(--fg);
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   text-decoration: none;
 }
 
@@ -154,13 +201,13 @@ a {
 }
 
 .nav a {
-  color: var(--muted);
+  color: var(--graphite);
   text-decoration: none;
 }
 
 .nav a:hover,
 .nav a[aria-current="page"] {
-  color: var(--fg);
+  color: var(--ink);
 }
 
 .nav a[aria-current="page"] {
@@ -181,35 +228,32 @@ a {
 
 .tagline {
   margin: 0 0 1.25rem;
-  color: var(--muted);
+  color: var(--graphite);
 }
 
 .chips {
   display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  font-size: 0.95rem;
 }
 
 .chips a {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  color: var(--fg);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  text-decoration: none;
+  color: var(--ink);
 }
 
-.chips a:hover {
-  border-color: var(--fg);
+.chips b {
+  font-weight: inherit;
 }
 
+/* inline-block이라 링크 밑줄이 글 수까지 이어지지 않는다 */
 .chips span {
-  color: var(--muted);
-  font-size: 0.8rem;
+  display: inline-block;
+  margin-left: 0.35rem;
+  color: var(--graphite);
+  font-size: 0.85rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
 }
 
 /* 페이지 제목 */
@@ -219,7 +263,7 @@ a {
 }
 
 .page-kicker a {
-  color: var(--muted);
+  color: var(--graphite);
 }
 
 .page-title {
@@ -235,7 +279,7 @@ main > .page-title:first-child {
 
 .page-desc {
   margin: 0 0 1.5rem;
-  color: var(--muted);
+  color: var(--graphite);
 }
 
 /* 글 목록 */
@@ -250,12 +294,13 @@ main > .page-title:first-child {
 
 .row h2 {
   margin: 0 0 0.3rem;
+  letter-spacing: -0.01em;
   font-size: 1.25rem;
   line-height: 1.4;
 }
 
 .row h2 a {
-  color: var(--fg);
+  color: var(--ink);
   text-decoration: none;
 }
 
@@ -265,29 +310,38 @@ main > .page-title:first-child {
 
 .row-sum {
   margin: 0 0 0.4rem;
-  color: var(--muted);
+  color: var(--graphite);
+}
+
+.row-meta,
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.9rem;
 }
 
 .row-meta {
   margin: 0;
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.85rem;
 }
 
 .row-meta a {
-  color: var(--muted);
+  color: var(--graphite);
 }
 
 .badge {
-  padding: 0 0.4rem;
+  padding: 0 0.35rem;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius);
   font-size: 0.75rem;
+  line-height: 1.6;
+  align-self: center;
 }
 
 .empty,
 .count {
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.9rem;
 }
 
@@ -299,7 +353,7 @@ main > .page-title:first-child {
   display: flex;
   justify-content: space-between;
   padding: 1rem 0 2rem;
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.9rem;
 }
 
@@ -315,13 +369,13 @@ main > .page-title:first-child {
   display: block;
   padding: 1.25rem;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  color: var(--fg);
+  border-radius: var(--radius);
+  color: var(--ink);
   text-decoration: none;
 }
 
 .series-card:hover {
-  border-color: var(--fg);
+  border-color: var(--ink);
 }
 
 .series-card h2 {
@@ -331,7 +385,7 @@ main > .page-title:first-child {
 
 .series-card p {
   margin: 0 0 0.5rem;
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.95rem;
 }
 
@@ -351,30 +405,39 @@ main > .page-title:first-child {
 
 .post-header h1 {
   margin: 0.75rem 0 0.5rem;
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
   line-height: 1.25;
   letter-spacing: -0.015em;
 }
 
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--ink);
+}
+
 .post-meta {
   margin: 0;
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.9rem;
 }
 
 .post-meta a {
-  color: var(--muted);
+  color: var(--graphite);
 }
 
 .post-body h2 {
-  margin-top: 2.25rem;
-  font-size: 1.35rem;
+  margin: 3rem 0 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  font-size: 1.5rem;
   line-height: 1.35;
 }
 
 .post-body h3 {
-  margin-top: 1.75rem;
-  font-size: 1.15rem;
+  margin: 2rem 0 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
 }
 
 .post-body img {
@@ -386,12 +449,12 @@ main > .page-title:first-child {
   margin: 1.25rem 0;
   padding: 0 1rem;
   border-left: 3px solid var(--line);
-  color: var(--muted);
+  color: var(--graphite);
 }
 
 code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.9em;
+  font-family: var(--mono);
+  font-size: 0.88em;
 }
 
 :not(pre) > code {
@@ -403,25 +466,42 @@ code {
 pre {
   overflow-x: auto;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--code-bg);
   line-height: 1.5;
 }
 
 /* 표는 좁은 화면에서 표만 가로로 스크롤한다 */
+/* 표: 데이터시트처럼 가로 괘선만. 위아래 굵은 선, 머리는 고정폭 */
 .post-body table {
   display: block;
   overflow-x: auto;
+  margin: 1.5rem 0;
   border-collapse: collapse;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
   font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-body thead th {
+  border-bottom: 1px solid var(--ink);
+  color: var(--graphite);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .post-body th,
 .post-body td {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid var(--line);
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
+}
+
+.post-body tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 .post-sources {
@@ -439,12 +519,13 @@ pre {
   margin-top: 2.5rem;
   padding: 1rem 1.25rem;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius);
   font-size: 0.95rem;
 }
 
 .series-box h2 {
   margin: 0 0 0.5rem;
+  font-weight: 400;
   font-size: 1rem;
 }
 
@@ -454,16 +535,20 @@ pre {
 }
 
 /* 글 상단 표시 */
+/* 글 상단 표시: 데이터시트의 NOTE처럼 왼쪽 선 */
 .notice {
   margin: 0 0 0.5rem;
-  padding: 0.6rem 0.9rem;
-  border-radius: 8px;
-  background: var(--notice-bg);
+  padding: 0.15rem 0 0.15rem 0.9rem;
+  border-left: 3px solid var(--trace);
+  color: var(--graphite);
   font-size: 0.9rem;
 }
 
 .notice-ad {
+  padding: 0.5rem 0.9rem;
+  border-left-color: #b88a00;
   background: var(--ad-bg);
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -472,7 +557,7 @@ pre {
   margin: 1rem 0 0.5rem;
   padding: 1rem 1.25rem;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius);
 }
 
 .pi h2 {
@@ -488,7 +573,7 @@ pre {
 }
 
 .pi-grid dt {
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.8rem;
 }
 
@@ -501,7 +586,7 @@ pre {
 
 .pi-note {
   margin: 0.75rem 0 0;
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.85rem;
 }
 
@@ -519,7 +604,7 @@ pre {
 .site-footer {
   padding: 1.5rem 0 2.5rem;
   border-top: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--graphite);
   font-size: 0.875rem;
 }
 
