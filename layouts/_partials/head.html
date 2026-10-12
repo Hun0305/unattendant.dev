@@ -9,7 +9,7 @@
 {{- if .IsTranslated }}
 <link rel="alternate" hreflang="x-default" href="{{ with hugo.Sites.Default }}{{ .Home.Permalink }}{{ end }}">
 {{- end }}
-{{- with resources.Get "css/main.css" | minify | fingerprint }}
+{{- with slice (resources.Get "css/fonts.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{- end }}
 {{- with .OutputFormats.Get "rss" }}
