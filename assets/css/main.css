@@ -144,16 +144,6 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
-.band-link {
-  margin-left: auto;
-  color: var(--silk);
-  opacity: 0.8;
-  text-decoration: none;
-}
-
-.band-link:hover {
-  opacity: 1;
-}
 
 /* 상태 점 = 보드의 ACT LED. 꺼짐은 속 빈 원이라 색 없이도 구분된다. 깜빡이지 않는다 */
 .dot {
@@ -609,9 +599,6 @@ pre {
 }
 
 @media (max-width: 560px) {
-  .band-link {
-    margin-left: 0;
-  }
 
   .pi-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
