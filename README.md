@@ -57,11 +57,11 @@ sources:                    # 선택. 글 끝 "출처" 목록
 | 위치 | 내용 |
 | --- | --- |
 | 모든 페이지 맨 위 | Pi 상태 띠: 연속 무인 운영일, CPU 온도, 오늘 비용. 아래 `status.json`을 브라우저가 읽어 채운다 |
-| 메뉴 | 글(`/`) · 시리즈(`/series/`) · 숫자(`/numbers/`) · 소개(`/about/`) |
+| 메뉴 | 글(`/`) · 시리즈(`/series/`) · 통계(`/numbers/`) · 소개(`/about/`) |
 | 홈 | 한 줄 소개, 시리즈 바로가기, 1단 글 목록(10개씩) |
-| 숫자 | 지금 Pi 상태(`status.json`)와 운영 지표 정의(`content/numbers/`) |
+| 통계 | 지금 Pi 상태(`status.json`)와 운영 지표 정의(`content/numbers/`) |
 
-소개·숫자 페이지는 front matter `nav`(about, numbers)로 메뉴의 현재 탭을 정하고, `layout`(simple, numbers)이라 작성 주체 표시가 붙지 않는다.
+소개·통계 페이지는 front matter `nav`(about, numbers)로 메뉴의 현재 탭을 정하고, `layout`(simple, numbers)이라 작성 주체 표시가 붙지 않는다.
 
 ### status.json
 
@@ -86,4 +86,4 @@ Pi가 몇 분마다 `public/status.json`에 쓴다(Phase 2). 파일이 없으면
 - 글이 하나도 없으면 `/posts/` 페이지는 생성되지 않고(404), 홈에는 "아직 발행된 글이 없습니다"가 보인다.
 - 명령어 옵션(`--cpu`)이 대시로 바뀌지 않도록 마크다운 자동 치환(typographer)을 꺼 뒀다.
 - 태그는 입력한 대소문자 그대로 표시된다(`capitalizeListTitles = false`).
-- 홈 RSS(`/index.xml`, `/en/index.xml`)에는 `posts`의 글만 들어간다(`layouts/home.rss.xml`). Hugo 기본 RSS는 소개·숫자 같은 고정 페이지도 글처럼 담는다.
+- 홈 RSS(`/index.xml`, `/en/index.xml`)에는 `posts`의 글만 들어간다(`layouts/home.rss.xml`). Hugo 기본 RSS는 소개·통계 같은 고정 페이지도 글처럼 담는다.

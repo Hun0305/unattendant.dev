@@ -1,6 +1,6 @@
 {{- /*
   홈 RSS(/index.xml, /en/index.xml). Hugo v0.167.0 내장 rss.xml을 옮겨 두 곳만 바꿨다.
-  1. 글만 담는다: 내장 템플릿은 site.RegularPages라 소개·숫자 같은 고정 페이지도 글처럼 들어갔다
+  1. 글만 담는다: 내장 템플릿은 site.RegularPages라 소개·통계 같은 고정 페이지도 글처럼 들어갔다
   2. lastBuildDate는 담는 글 중 가장 최근 수정일로, 글이 없으면 생략한다
 */ -}}
 {{- $authorEmail := "" }}

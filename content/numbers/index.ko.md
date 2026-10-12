@@ -1,5 +1,5 @@
 ---
-title: "숫자"
+title: "통계"
 layout: numbers
 nav: numbers
 description: "이 블로그가 사람 없이 얼마나, 얼마에, 얼마나 안정적으로 돌아가는지. 모든 숫자는 공개 레포의 운영 로그에서 계산합니다."

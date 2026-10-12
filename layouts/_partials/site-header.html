@@ -1,4 +1,4 @@
-{{- /* 메뉴 글 · 시리즈 · 숫자 · 소개. 소개·숫자 페이지는 front matter nav 값으로 활성 탭을 정한다. */ -}}
+{{- /* 메뉴 글 · 시리즈 · 통계 · 소개. 소개·통계 페이지는 front matter nav 값으로 활성 탭을 정한다. */ -}}
 {{- $active := "" -}}
 {{- $isTax := in (slice "taxonomy" "term") .Kind -}}
 {{- if .Params.nav }}{{ $active = .Params.nav }}
