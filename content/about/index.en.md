@@ -77,7 +77,7 @@ Automatic recovery means getting back to normal without a human: the next day's 
 | Rejection rate | The share of approval requests the operator rejected |
 | Cost per post | Total Claude spending over a period divided by the number of posts published in that period, including failed runs and days with no post. An estimate while on the subscription, the actual bill after moving to the API. Logged in US dollars; won amounts are conversions |
 | Auto-recovery rate | Of the failures that have ended, the share recovered without a human. Failures still open are shown separately |
-| Uptime | The share of time the site was up, calculated from the external monitor's checks every 5 minutes. The last 30 days and the whole period |
+| Uptime | The share of time the site was up, calculated from the external monitor's checks every 5 minutes. The last 30 days and the whole period. You can check it yourself on the [public status page](https://stats.uptimerobot.com/fVZhbBgUDa) |
 
 ## What is public
 

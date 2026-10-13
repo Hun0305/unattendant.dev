@@ -15,4 +15,4 @@ Once the agent is running, Huninn recomputes these from its operating logs every
 | Auto-recovery rate | Share of detected failures recovered without a human |
 | Quality gate pass rate | Share of first drafts that passed as is, and after revision |
 | Cost per post | AI API cost to produce one post |
-| Uptime | Site availability measured from outside |
+| Uptime | Site availability measured from outside. You can check it yourself on the [public status page](https://stats.uptimerobot.com/fVZhbBgUDa) |
