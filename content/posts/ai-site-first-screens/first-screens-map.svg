@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350" role="img" aria-labelledby="st sd">
+<title id="st">5개 안의 위치: AI 운영이 드러나는 정도와 검색 독자에게 맞는 정도</title>
+<desc id="sd">가로축은 AI 운영 정체성이 드러나는 정도, 세로축은 검색으로 들어온 독자에게 맞는 정도다. A는 정체성 강함·검색 약함, B는 매우 강함·보통, C는 매우 강함·약함, D는 보통·매우 강함, E는 보통·강함에 놓인다. 두 축이 모두 매우 강한 오른쪽 위 구석은 비어 있다.</desc>
+<style>
+.s-axis{fill:none;stroke:var(--line);stroke-width:1.5}
+.s-grid{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:3 5}
+.s-dot{fill:var(--graphite)}
+.s-hot{fill:var(--trace)}
+.s-lab{font-family:var(--sans);font-size:14px;fill:var(--ink)}
+.s-lab.s-hot{fill:var(--trace);font-weight:700}
+.s-tick{font-family:var(--sans);font-size:12px;fill:var(--graphite)}
+.s-title{font-family:var(--sans);font-size:13px;fill:var(--graphite)}
+.s-empty{fill:none;stroke:var(--trace);stroke-width:1.5;stroke-dasharray:5 4}
+</style>
+<rect class="s-empty" x="432" y="22" width="178" height="80" rx="2"/>
+<text class="s-tick" x="521" y="66" text-anchor="middle" style="fill:var(--trace)">둘 다 강한 자리는</text>
+<text class="s-tick" x="521" y="82" text-anchor="middle" style="fill:var(--trace)">비어 있었다</text>
+<path class="s-axis" d="M90 22V290H610"/>
+<path class="s-grid" d="M173 22V290"/><path class="s-grid" d="M340 22V290"/><path class="s-grid" d="M507 22V290"/>
+<path class="s-grid" d="M90 258H610"/><path class="s-grid" d="M90 192H610"/><path class="s-grid" d="M90 128H610"/><path class="s-grid" d="M90 62H610"/>
+<text class="s-tick" x="173" y="312" text-anchor="middle">보통</text><text class="s-tick" x="340" y="312" text-anchor="middle">강함</text><text class="s-tick" x="507" y="312" text-anchor="middle">매우 강함</text><text class="s-tick" x="78" y="262" text-anchor="end">약함</text><text class="s-tick" x="78" y="196" text-anchor="end">보통</text><text class="s-tick" x="78" y="132" text-anchor="end">강함</text><text class="s-tick" x="78" y="66" text-anchor="end">매우 강함</text>
+<text class="s-title" x="340" y="338" text-anchor="middle">AI가 운영한다는 정체성이 드러나는 정도 →</text>
+<text class="s-title" transform="translate(20 160) rotate(-90)" text-anchor="middle">검색 독자에게 맞는 정도 →</text>
+<circle class="s-dot" cx="340" cy="258" r="7"/><text class="s-lab" x="340" y="244" text-anchor="middle">A 운영 일지형</text>
+<circle class="s-dot" cx="507" cy="192" r="7"/><text class="s-lab" x="493" y="198" text-anchor="end">B 점수판형</text>
+<circle class="s-dot" cx="507" cy="258" r="7"/><text class="s-lab" x="493" y="262" text-anchor="end">C 관제실형</text>
+<circle class="s-dot" cx="173" cy="62" r="7"/><text class="s-lab" x="187" y="68" text-anchor="start">D 실측 데이터형</text>
+<circle class="s-dot s-hot" cx="173" cy="128" r="9"/><text class="s-lab s-hot" x="187" y="132" text-anchor="start">E 매체형 + 상태 띠</text>
+</svg>
