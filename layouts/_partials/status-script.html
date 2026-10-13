@@ -30,7 +30,10 @@
       });
       document.querySelectorAll("[data-status-stats]").forEach(function (el) { el.hidden = false; });
       document.querySelectorAll("[data-status-idle]").forEach(function (el) {
-        if (stale) { el.textContent = el.getAttribute("data-stale") || "{{ i18n "bandStale" }}"; } else { el.hidden = true; }
+        var until = el.getAttribute("data-keep-until");
+        if (stale) { el.textContent = el.getAttribute("data-stale") || "{{ i18n "bandStale" }}"; }
+        else if (until && s[until] == null) { /* 그 값이 아직 없다(무인 운영 전): 안내를 그대로 둔다 */ }
+        else { el.hidden = true; }
       });
       document.querySelectorAll("[data-status-dot]").forEach(function (el) { el.setAttribute("data-state", stale ? "stale" : "ok"); });
     })

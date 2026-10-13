@@ -71,7 +71,7 @@ sources:                    # 선택. 글 끝 "출처" 목록
 
 | 위치 | 내용 |
 | --- | --- |
-| 모든 페이지 맨 위 | Pi 상태 띠: 연속 무인 운영일, CPU 온도, 오늘 비용. 아래 `status.json`을 브라우저가 읽어 채운다 |
+| 모든 페이지 맨 위 | Pi 상태 띠: 연속 무인 운영일, CPU 온도, 메모리, 오늘 비용. 아래 `status.json`을 브라우저가 읽어 채운다 |
 | 메뉴 | 글(`/`) · 시리즈(`/series/`) · 통계(`/numbers/`) · 소개(`/about/`) |
 | 홈 | 한 줄 소개, 시리즈 바로가기, 1단 글 목록(10개씩) |
 | 통계 | 지금 Pi 상태(`status.json`)와 운영 지표 정의(`content/numbers/`) |
@@ -80,7 +80,9 @@ sources:                    # 선택. 글 끝 "출처" 목록
 
 ### status.json
 
-Pi가 몇 분마다 `public/status.json`에 쓴다(Phase 2). 파일이 없으면 띠에 "운영 준비 중"만 보이고, `updated`가 30분 넘게 지나면 회색 점과 "갱신 멈춤"이 뜬다. 없는 값은 화면에서 빠진다.
+Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops/status.py`). 파일은 RAM인 `/run/huninn/status.json`에 있고 Caddy가 `/status.json`으로 내준다. 발행 빌드가 `public/`을 비우므로 `public/`에는 두지 않는다. 파일이 없으면 띠에 "운영 준비 중"만 보이고, `updated`가 30분 넘게 지나면 회색 점과 "갱신 멈춤"이 뜬다. 없는 값은 화면에서 빠진다.
+
+무인 운영 전에는 Pi가 `updated`, `cpu_temp_c`, `mem_used_gb`, `mem_total_gb`, `uptime_s`, `disk_free_pct`만 쓴다. `unattended_days`가 없으면 띠가 값을 보이면서 "운영 준비 중"도 같이 둔다. `unattended_days`와 `cost_today_krw`는 개입 기록과 환율이 정해진 뒤에 더하고, 그때부터 "운영 준비 중"이 사라진다.
 
 ```json
 {
