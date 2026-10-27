@@ -10,8 +10,11 @@
 {{- range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
 {{- end }}
+{{- /* x-default는 이 페이지의 기본 언어(한국어)판. 홈을 가리키면 글마다 대체 주소가 홈이 된다 */}}
 {{- if .IsTranslated }}
-<link rel="alternate" hreflang="x-default" href="{{ with hugo.Sites.Default }}{{ .Home.Permalink }}{{ end }}">
+{{- range where .AllTranslations "Language.Lang" hugo.Sites.Default.Language.Lang }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}
 {{- end }}
 {{- with slice (resources.Get "css/fonts.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
