@@ -754,6 +754,14 @@ pre {
   padding: 3rem 0 1.5rem;
 }
 
+.rows-title {
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--graphite);
+  font-size: 0.95rem;
+}
+
 .hero h1 {
   margin: 0 0 0.75rem;
   font-size: clamp(2rem, 7vw, 3rem);
