@@ -38,6 +38,10 @@ disableDefaultLanguageRedirect = true
 [markup.goldmark.extensions.typographer]
   disable = true
 
+# 코드 강조는 인라인 스타일(monokai, 어두운 바탕) 대신 클래스로 내보내고 색은 main.css가 사이트 토큰으로 정한다
+[markup.highlight]
+  noClasses = false
+
 # 목차는 본문 소제목(h2·h3)만 (layouts/page.html, 소제목 4개 이상인 글)
 [markup.tableOfContents]
   startLevel = 2

@@ -10,6 +10,7 @@
   --led-off: #8fa397;
   --line: #d9dedb;
   --code-bg: #f2f4f3;
+  --code-str: #8a4b0f;
   --notice-bg: #eef3f0;
   --ad-bg: #fff1c7;
   --radius: 2px;
@@ -29,6 +30,8 @@
     --led-off: #6f8378;
     --line: #2a322e;
     --code-bg: #1b211e;
+  --code-str: #e3b77a;
+    --code-str: #e3b77a;
     --notice-bg: #18221d;
     --ad-bg: #3a2f12;
     color-scheme: dark;
@@ -525,6 +528,34 @@ pre {
   border-radius: var(--radius);
   background: var(--code-bg);
   line-height: 1.5;
+}
+
+/* 코드 강조(Hugo Chroma, hugo.toml markup.highlight.noClasses = false). 데이터시트처럼 색은 셋만:
+   주석은 보조 글자색, 키워드·내장 이름은 배선 초록, 문자열·숫자는 갈색. 나머지는 본문색 */
+.highlight pre {
+  color: var(--ink);
+}
+
+.chroma :is(.c, .c1, .ch, .cm, .cp, .cpf, .cs) {
+  color: var(--graphite);
+  font-style: italic;
+}
+
+.chroma :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .nb, .bp, .ow) {
+  color: var(--trace);
+}
+
+.chroma :is(.s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .dl, .m, .mb, .mf, .mh, .mi, .il, .mo) {
+  color: var(--code-str);
+}
+
+.chroma .err {
+  color: inherit;
+}
+
+.chroma .hl {
+  display: block;
+  background: var(--notice-bg);
 }
 
 /* 표는 좁은 화면에서 표만 가로로 스크롤한다 */
