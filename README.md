@@ -83,6 +83,20 @@ receipt: {...}              # 직접 쓰지 않는다. Huninn의 publish_post가
 
 소개·통계 페이지는 front matter `nav`(about, numbers)로 메뉴의 현재 탭을 정하고, `layout`(simple, numbers)이라 작성 주체 표시가 붙지 않는다.
 
+글 페이지는 위에서부터 작성 주체 표시와 언어판 안내(한국어판 → 영어판, Huninn이 쓴 영어판 → 한국어 원문), 제목, 날짜·읽는 시간(한국어는 공백 뺀 글자 수 ÷ 500자/분, 영어는 Hugo 기본 213단어/분)·시리즈·태그, 목차(소제목 4개 이상일 때 접어서), 본문, 출처, 발행 기록(`receipt`가 있을 때), GitHub 변경 이력 링크, 같은 시리즈의 글 순서다. 본문 소제목 옆에는 그 절로 가는 `#` 링크가 마우스를 올릴 때만 보인다.
+
+### 빌드가 만드는 파일
+
+| 파일 | 내용 |
+| --- | --- |
+| `/index.xml`, `/en/index.xml`, `/series/<이름>/index.xml`, `/tags/<이름>/index.xml` | RSS(홈은 전체 글, 시리즈·태그는 그 글만. 시리즈 페이지에 구독 링크). 요약은 front matter `description`, 글 전문(`content:encoded`, 소제목 `#` 링크는 빼고 링크·그림은 절대 주소), 최근 20편 (`layouts/rss.xml`. 시리즈·태그 목록 자체의 피드는 `outputs`에서 끔) |
+| `/sitemap.xml` | 언어별 사이트맵 색인. 글이 아직 없는 시리즈·태그 페이지는 빼고 그 페이지에 `noindex`를 단다(Search Console Soft 404, 2026-10-26) |
+| `/llms.txt` | AI 검색·크롤러용 사이트 요약과 두 언어판 글 목록 (`layouts/home.llms.txt`) |
+| `/og-default.{ko,en}.png` | 링크 미리보기 기본 그림 (`scripts/og-card.py`로 만든 정적 파일) |
+| `/favicon.{ico,svg}`, `/apple-touch-icon.png` | 파비콘과 홈 화면 아이콘 (`scripts/favicon.py`로 만든 정적 파일) |
+
+글 페이지 `<head>`에는 `og:image`, 글의 한국어판을 가리키는 `hreflang="x-default"`, 구조화 데이터(schema.org `BlogPosting`, `layouts/_partials/jsonld.html`)가 들어간다.
+
 ### status.json
 
 Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops/status.py`). 화면을 채우는 스크립트는 `assets/js/status.js`이고, 문구는 띠 요소의 `data-t-*` 속성(`status-band.html`, i18n)에서 읽는다. 인라인 스크립트가 없어야 Caddy의 CSP(`script-src 'self'`)가 통하므로 템플릿에 `<script>` 코드를 직접 쓰지 않는다(JSON-LD 같은 데이터 블록은 괜찮다). 파일은 RAM인 `/run/huninn/status.json`에 있고 Caddy가 `/status.json`으로 내준다. 발행 빌드가 `public/`을 비우므로 `public/`에는 두지 않는다. 파일이 없으면 띠에 "운영 준비 중"만 보이고, `updated`가 30분 넘게 지나면 회색 점과 "갱신 멈춤"이 뜬다. 없는 값은 화면에서 빠진다.
