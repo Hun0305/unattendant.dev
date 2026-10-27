@@ -76,7 +76,7 @@ receipt: {...}              # 직접 쓰지 않는다. Huninn의 publish_post가
 | --- | --- |
 | 모든 페이지 맨 위 | Pi 상태 띠: 연속 무인 운영일, CPU 온도, 메모리, 오늘 비용. 아래 `status.json`을 브라우저가 읽어 채운다 |
 | 메뉴 | 글(`/`) · 시리즈(`/series/`) · 통계(`/numbers/`) · 소개(`/about/`) |
-| 홈 | 한 줄 소개, 시리즈 바로가기, 1단 글 목록(10개씩) |
+| 홈 | 한 줄 소개, 시리즈 바로가기(글이 없는 시리즈는 링크 없이 "준비 중"), 1단 글 목록(10개씩) |
 | 통계 | 지금 Pi 상태(`status.json`)와 운영 지표 정의(`content/numbers/`) |
 
 소개·통계 페이지는 front matter `nav`(about, numbers)로 메뉴의 현재 탭을 정하고, `layout`(simple, numbers)이라 작성 주체 표시가 붙지 않는다.

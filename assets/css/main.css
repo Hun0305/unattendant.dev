@@ -239,6 +239,18 @@ a {
   font-weight: inherit;
 }
 
+/* 아직 글이 없는 시리즈: 링크가 아니라 흐린 글자 */
+.chips .chip-soon {
+  margin: 0;
+  color: var(--graphite);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.chips .chip-soon span {
+  font-family: var(--sans);
+}
+
 /* inline-block이라 링크 밑줄이 글 수까지 이어지지 않는다 */
 .chips span {
   display: inline-block;
