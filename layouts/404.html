@@ -4,4 +4,11 @@
   <p class="tagline">{{ i18n "notFound" }}</p>
   <p><a href="{{ site.Home.RelPermalink }}">{{ i18n "backHome" }}</a></p>
 </section>
+{{- /* 잘못 들어온 방문자에게 최근 글 3편 */}}
+{{- with first 3 (where site.RegularPages "Section" "in" site.Params.mainSections) }}
+<section class="rows">
+  <h2 class="rows-title">{{ i18n "recentPosts" }}</h2>
+  {{ range . }}{{ partial "post-row.html" . }}{{ end }}
+</section>
+{{- end }}
 {{ end }}

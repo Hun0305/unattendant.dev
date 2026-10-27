@@ -1,0 +1,14 @@
+{{- /* 글 하단: 그림마다 누가 만들었는지 (fig의 by). .Content를 그린 뒤에 불러야 목록이 찬다.
+     by가 하나도 없는 글(2026-10-27 이전 형식)에는 나오지 않는다 */ -}}
+{{- $figs := .Store.Get "figs" | default slice -}}
+{{- $labeled := where $figs "by" "!=" "" -}}
+{{- if $labeled }}
+<section class="post-figures">
+  <h2>{{ i18n "figureCredits" }}</h2>
+  <ul>
+    {{- range $figs }}
+    <li><a href="#fig-{{ .n }}">{{ i18n "figureN" .n }}</a> {{ with .by }}{{ i18n (printf "figBy_%s" .) }}{{ else }}{{ i18n "figByUnknown" }}{{ end }}</li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

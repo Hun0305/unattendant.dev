@@ -3,17 +3,35 @@
 <title>{{ if eq .Kind "404" }}{{ i18n "notFound" }} · {{ site.Title }}{{ else if .IsHome }}{{ site.Title }} — {{ site.Params.tagline }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
+{{- /* 파비콘(scripts/favicon.py가 만든다)과 브라우저 주소창 색. 주소창은 맨 위 상태 띠(--mask)와 이어지게 */}}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="48x48">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+<meta name="theme-color" content="#1d5b3d" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#173d2b" media="(prefers-color-scheme: dark)">
+{{- /* 글이 아직 없는 시리즈·태그 페이지는 "글 없음" 안내뿐이라 색인하지 않는다(Soft 404). 사이트맵에서도 뺀다(sitemap.xml) */}}
+{{- if and (eq .Kind "term") (not .Pages) }}
+<meta name="robots" content="noindex">
+{{- end }}
 {{- range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
 {{- end }}
+{{- /* x-default는 이 페이지의 기본 언어(한국어)판. 홈을 가리키면 글마다 대체 주소가 홈이 된다 */}}
 {{- if .IsTranslated }}
-<link rel="alternate" hreflang="x-default" href="{{ with hugo.Sites.Default }}{{ .Home.Permalink }}{{ end }}">
+{{- range where .AllTranslations "Language.Lang" hugo.Sites.Default.Language.Lang }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}
 {{- end }}
 {{- with slice (resources.Get "css/fonts.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{- end }}
+{{- /* 상태 띠 스크립트. 인라인 스크립트가 없어야 CSP(script-src 'self')를 걸 수 있다 */}}
+{{- with resources.Get "js/status.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end }}
 {{- with .OutputFormats.Get "rss" }}
-<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">
+<link rel="alternate" type="application/rss+xml" title="{{ if $.IsHome }}{{ site.Title }}{{ else }}{{ $.Title }} · {{ site.Title }}{{ end }}" href="{{ .Permalink }}">
 {{- end }}
 {{- partial "opengraph.html" . }}
 {{- partial "twitter_cards.html" . }}
+{{- partial "jsonld.html" . }}

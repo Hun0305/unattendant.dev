@@ -1,8 +1,14 @@
-{{- /* 홈 상단 시리즈 바로가기. 글이 있는 시리즈만 글 수를 붙인다 */ -}}
+{{- /* 홈 상단 시리즈 바로가기. 글이 있는 시리즈는 링크와 글 수, 아직 없는 시리즈는 링크 없이 "준비 중".
+     빈 시리즈 페이지는 "글 없음" 안내뿐이라 색인하지 않으므로(head.html) 첫 화면에서 그리로 보내지 않는다.
+     시리즈 설명은 시리즈 탭에서 본다 */ -}}
 {{ with site.GetPage "/series" }}
 <nav class="chips" aria-label="{{ i18n "tabSeries" }}">
   {{ range .Pages.ByWeight }}
-  <a href="{{ .RelPermalink }}"><b>{{ .Title }}</b>{{ with len .Pages }}<span>{{ i18n "postsCount" . }}</span>{{ end }}</a>
+  {{- if .Pages }}
+  <a href="{{ .RelPermalink }}"><b>{{ .Title }}</b><span>{{ i18n "postsCount" (len .Pages) }}</span></a>
+  {{- else }}
+  <span class="chip-soon"><b>{{ .Title }}</b><span>{{ i18n "comingSoon" }}</span></span>
+  {{- end }}
   {{ end }}
 </nav>
 {{ end }}

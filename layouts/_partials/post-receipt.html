@@ -1,0 +1,30 @@
+{{- /*
+  글 하단 "발행 기록": Huninn의 발행 도구(blogops publish_post)가 발행하는 순간 front matter receipt에 남긴 값.
+  초안을 쓴 모델, 초안 작성·품질 검사·반려·승인 횟수와 날짜, 발행할 때 Pi 상태. 반려 사유 같은 비공개 기록의 내용은 없다.
+  영어판은 발행 뒤에 붙어서 receipt가 없으므로 한국어판 것을 쓴다. 사람이 쓴 글에는 없다.
+  이 기능 전(2026-10-27) 글은 운영자가 review receipts로 남은 기록에서 다시 만들어 넣는다. 그때는 backfilled(채운 날)가 있고 Pi 상태가 없다.
+*/ -}}
+{{- $r := .Params.receipt }}
+{{- if not $r }}{{ range where .Translations "Language.Lang" "ko" }}{{ $r = .Params.receipt }}{{ end }}{{ end }}
+{{- with $r }}
+{{- $at := "2006-01-02 15:04" }}
+<section class="post-receipt" aria-labelledby="receipt-title">
+  <h2 id="receipt-title">{{ i18n "receiptTitle" }}</h2>
+  <dl>
+    {{- with .cycle }}<div><dt>{{ i18n "receiptCycle" }}</dt><dd class="mono">{{ . }}</dd></div>{{ end }}
+    {{- with .model }}<div><dt>{{ i18n "receiptModel" }}</dt><dd class="mono">{{ . }}</dd></div>{{ end }}
+    {{- with .drafted }}<div><dt>{{ i18n "receiptDrafted" }}</dt><dd>{{ time.AsTime . | time.Format $at }}</dd></div>{{ end }}
+    {{- with .quality_checks }}<div><dt>{{ i18n "receiptQuality" }}</dt><dd>{{ i18n "receiptTimes" . }}</dd></div>{{ end }}
+    {{- if isset . "rejections" }}<div><dt>{{ i18n "receiptRejections" }}</dt><dd>{{ i18n "receiptTimes" .rejections }}</dd></div>{{ end }}
+    {{- with .approved }}<div><dt>{{ i18n "receiptApproved" }}</dt><dd>{{ time.AsTime . | time.Format $at }}</dd></div>{{ end }}
+    <div><dt>{{ i18n "receiptPublished" }}</dt><dd>{{ $.PublishDate | time.Format $at }}</dd></div>
+    {{- if or .cpu_temp_c .mem_used_gb }}
+    <div><dt>{{ i18n "receiptPi" }}</dt><dd>
+      {{- with .cpu_temp_c }}CPU {{ printf "%.1f" . }}°C{{ end }}
+      {{- if and .cpu_temp_c .mem_used_gb }} · {{ end }}
+      {{- with .mem_used_gb }}{{ i18n "piMem" }} {{ printf "%.1f" . }} / {{ printf "%.1f" $r.mem_total_gb }}GB{{ end }}</dd></div>
+    {{- end }}
+  </dl>
+  <p class="receipt-note">{{ with .backfilled }}{{ i18n "receiptBackfilled" (time.AsTime . | time.Format "2006-01-02") }}{{ else }}{{ i18n "receiptNote" | safeHTML }}{{ end }}</p>
+</section>
+{{- end }}

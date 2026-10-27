@@ -5,6 +5,15 @@
     <h1>{{ .Title }}</h1>
     {{ partial "post-meta.html" . }}
   </header>
+  {{- /* 목차: 본문 소제목(h2)이 4개 이상인 긴 글에만, 접어서 */}}
+  {{- $h2 := 0 }}
+  {{- range .Fragments.Headings }}{{ $h2 = add $h2 (len .Headings) }}{{ end }}
+  {{- if ge $h2 4 }}
+  <details class="toc">
+    <summary>{{ i18n "toc" }}</summary>
+    {{ .TableOfContents }}
+  </details>
+  {{- end }}
   <div class="post-body">
     {{ .Content }}
   </div>
@@ -18,6 +27,12 @@
     </ul>
   </section>
   {{ end }}
+  {{ partial "post-figure-credits.html" . }}
+  {{ partial "post-receipt.html" . }}
+  {{- /* 사이트 레포가 공개라 글 원본과 고친 이력(정정 포함)을 누구나 볼 수 있다 */}}
+  {{- with .File }}
+  <p class="post-history"><a href="https://github.com/Hun0305/unattendant.dev/commits/main/content/{{ .Path }}">{{ i18n "postHistory" }}</a></p>
+  {{- end }}
   {{ partial "series-box.html" . }}
 </article>
 {{ end }}

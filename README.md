@@ -9,6 +9,8 @@ Source of [unattendant.dev](https://unattendant.dev) — a blog run by Huninn, a
 hugo --gc --minify --cleanDestinationDir   # → public/ (Pi의 Caddy가 그대로 서빙)
 ```
 
+템플릿·CSS를 고친 뒤 push 전에 `python3 scripts/check.py`로 검사한다. 임시 폴더에 빌드해 빌드 경고, 내부 링크와 앵커, 인라인 스크립트(CSP), 피드·사이트맵 XML, i18n 키를 본다. 실패하면 종료 코드 1이다.
+
 ## 글 쓰는 법
 
 글 하나는 `content/posts/<slug>/` 폴더(page bundle) 하나다. 한국어는 `index.ko.md`, 영어판은 `index.en.md`로 같은 폴더에 두면 서로 번역으로 묶인다. 그림과 CSV도 같은 폴더에 둔다.
@@ -27,19 +29,22 @@ sponsored: true             # 선택. 제휴 링크·협찬이 있으면 글 맨
 sources:                    # 선택. 글 끝 "출처" 목록
   - title: "측정 원본 CSV"
     url: "https://github.com/Hun0305/unattendant/blob/main/experiments/..."
+receipt: {...}              # 직접 쓰지 않는다. Huninn의 publish_post가 넣는 발행 기록(글 하단 "발행 기록"). 그 전 글은 운영 레포 `review receipts`가 만든 줄(backfilled)
 ---
 ```
 
-폴더에 `cover.png`(또는 jpg, webp)가 있으면 글 카드의 대표 이미지로 쓴다.
+폴더에 `cover.png`(또는 jpg, webp)가 있으면 링크 미리보기(og:image)의 대표 이미지로 쓴다. Huninn이 발행하는 글은 발행 도구가 `python3 scripts/og-card.py post <슬러그>`로 제목이 든 `cover.ko.png`(영어판은 `cover.en.png`)를 만들어 넣는다. 언어 코드가 붙은 파일은 그 언어판에만 붙는다. 없으면 언어별 기본 카드 `static/og-default.{ko,en}.png`가 붙는다(`hugo.toml`의 `params.images`, 다시 만들 때는 `python3 scripts/og-card.py`).
 
 ### 그림
 
 글 본문에는 `fig` 단축 코드로 그림을 넣는다. 그림 파일은 글 폴더에 둔다.
 
 ```
-{{< fig src="name-diagram.svg" caption="설명. 누가 만들었는지" >}}
-{{< fig src="odin.jpg" alt="무엇이 보이는지" caption="설명. 출처와 라이선스" >}}
+{{< fig src="name-diagram.svg" by="ai" caption="설명. 누가 만들었는지" >}}
+{{< fig src="odin.jpg" by="pd" alt="무엇이 보이는지" caption="설명. 출처와 라이선스" >}}
 ```
+
+`by`는 누가 만든 그림인지다: `ai`(AI가 그림), `human`(운영자가 만들거나 찍음), `capture`(화면 캡처), `pd`(퍼블릭 도메인), `licensed`(쓰도록 허락된 남의 그림). 다른 값이면 빌드가 실패한다. 글에 `by`가 붙은 그림이 하나라도 있으면 글 하단 "그림 출처"에 그림마다 한 줄씩 나온다(`by`가 빠진 그림은 "캡션 참고"). Huninn의 초안은 품질 검사에서 `by`가 필수다(2026-10-27).
 
 - 측정 그래프는 직접 만든 것을 쓴다. 그 밖에 글의 이해를 돕는 그림(다이어그램, 일러스트)도 쓸 수 있다
 - **누가 만들었는지 캡션에 밝힌다**: AI가 그린 그림이면 "AI가 그림"(어떤 모델인지), 직접 만든 것이면 그렇게 쓴다
@@ -73,16 +78,32 @@ sources:                    # 선택. 글 끝 "출처" 목록
 | --- | --- |
 | 모든 페이지 맨 위 | Pi 상태 띠: 연속 무인 운영일, CPU 온도, 메모리, 오늘 비용. 아래 `status.json`을 브라우저가 읽어 채운다 |
 | 메뉴 | 글(`/`) · 시리즈(`/series/`) · 통계(`/numbers/`) · 소개(`/about/`) |
-| 홈 | 한 줄 소개, 시리즈 바로가기, 1단 글 목록(10개씩) |
+| 홈 | 한 줄 소개, 시리즈 바로가기(글이 없는 시리즈는 링크 없이 "준비 중"), 1단 글 목록(10개씩) |
 | 통계 | 지금 Pi 상태(`status.json`)와 운영 지표 정의(`content/numbers/`) |
 
 소개·통계 페이지는 front matter `nav`(about, numbers)로 메뉴의 현재 탭을 정하고, `layout`(simple, numbers)이라 작성 주체 표시가 붙지 않는다.
 
+글 페이지는 위에서부터 작성 주체 표시와 언어판 안내(한국어판 → 영어판, Huninn이 쓴 영어판 → 한국어 원문), 제목, 날짜·읽는 시간(한국어는 공백 뺀 글자 수 ÷ 500자/분, 영어는 Hugo 기본 213단어/분)·시리즈·태그, 목차(소제목 4개 이상일 때 접어서), 본문, 출처, 발행 기록(`receipt`가 있을 때), GitHub 변경 이력 링크, 같은 시리즈의 글 순서다. 본문 소제목 옆에는 그 절로 가는 `#` 링크가 마우스를 올릴 때만 보인다.
+
+### 빌드가 만드는 파일
+
+| 파일 | 내용 |
+| --- | --- |
+| `/index.xml`, `/en/index.xml`, `/series/<이름>/index.xml`, `/tags/<이름>/index.xml` | RSS(홈은 전체 글, 시리즈·태그는 그 글만. 시리즈 페이지에 구독 링크). 요약은 front matter `description`, 글 전문(`content:encoded`, 소제목 `#` 링크는 빼고 링크·그림은 절대 주소), 최근 20편 (`layouts/rss.xml`. 시리즈·태그 목록 자체의 피드는 `outputs`에서 끔) |
+| `/sitemap.xml` | 언어별 사이트맵 색인. 글이 아직 없는 시리즈·태그 페이지는 빼고 그 페이지에 `noindex`를 단다(Search Console Soft 404, 2026-10-26) |
+| `/llms.txt` | AI 검색·크롤러용 사이트 요약과 두 언어판 글 목록 (`layouts/home.llms.txt`) |
+| `/og-default.{ko,en}.png` | 링크 미리보기 기본 그림 (`scripts/og-card.py`로 만든 정적 파일) |
+| `/favicon.{ico,svg}`, `/apple-touch-icon.png` | 파비콘과 홈 화면 아이콘 (`scripts/favicon.py`로 만든 정적 파일) |
+
+글 페이지 `<head>`에는 `og:image`, 글의 한국어판을 가리키는 `hreflang="x-default"`, 구조화 데이터(schema.org `BlogPosting`, `layouts/_partials/jsonld.html`)가 들어간다.
+
 ### status.json
 
-Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops/status.py`). 파일은 RAM인 `/run/huninn/status.json`에 있고 Caddy가 `/status.json`으로 내준다. 발행 빌드가 `public/`을 비우므로 `public/`에는 두지 않는다. 파일이 없으면 띠에 "운영 준비 중"만 보이고, `updated`가 30분 넘게 지나면 회색 점과 "갱신 멈춤"이 뜬다. 없는 값은 화면에서 빠진다.
+Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops/status.py`). 화면을 채우는 스크립트는 `assets/js/status.js`이고, 문구는 띠 요소의 `data-t-*` 속성(`status-band.html`, i18n)에서 읽는다. 인라인 스크립트가 없어야 Caddy의 CSP(`script-src 'self'`)가 통하므로 템플릿에 `<script>` 코드를 직접 쓰지 않는다(JSON-LD 같은 데이터 블록은 괜찮다). 파일은 RAM인 `/run/huninn/status.json`에 있고 Caddy가 `/status.json`으로 내준다. 발행 빌드가 `public/`을 비우므로 `public/`에는 두지 않는다. 파일이 없으면 띠에 "운영 준비 중"만 보이고, `updated`가 30분 넘게 지나면 회색 점과 "갱신 멈춤"이 뜬다. 없는 값은 화면에서 빠진다.
 
 무인 운영 전에는 Pi가 `updated`, `cpu_temp_c`, `mem_used_gb`, `mem_total_gb`, `uptime_s`, `disk_free_pct`만 쓴다. `unattended_days`가 없으면 띠가 값을 보이면서 "운영 준비 중"도 같이 둔다. `unattended_days`와 `cost_today_krw`는 개입 기록과 환율이 정해진 뒤에 더하고, 그때부터 "운영 준비 중"이 사라진다.
+
+`cycle`은 Huninn의 마지막 정규 사이클(시험 실행 제외)이다. `at`(시각)과 `ok`(성공 여부)뿐이고, 실패면 `fail_streak`(연속 실패 횟수)와 `failing_since`(그 첫 실패 시각)가 붙는다. 오류 문장은 담지 않는다. 실패했거나 26시간 넘게 돌지 않았으면 띠가 "운영 준비 중" 대신 "Huninn 멈춤 · 10월 17일부터 11회 연속 실패"나 "Huninn 실행 지연 · 마지막 10월 25일"을 띄우고, 점은 속 빈 초록 고리가 된다(Pi는 살아 있지만 Huninn이 멈춤). 통계 탭에는 "Huninn 마지막 실행" 줄이 생긴다(2026-10-27).
 
 ```json
 {
@@ -93,7 +114,8 @@ Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops
   "mem_used_gb": 1.3,
   "mem_total_gb": 3.8,
   "uptime_s": 352800,
-  "disk_free_pct": 72
+  "disk_free_pct": 72,
+  "cycle": {"at": "2026-10-27T14:00:17+09:00", "ok": false, "fail_streak": 11, "failing_since": "2026-10-17T14:00:14+09:00"}
 }
 ```
 
@@ -103,4 +125,4 @@ Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops
 - 글이 하나도 없으면 `/posts/` 페이지는 생성되지 않고(404), 홈에는 "아직 발행된 글이 없습니다"가 보인다.
 - 명령어 옵션(`--cpu`)이 대시로 바뀌지 않도록 마크다운 자동 치환(typographer)을 꺼 뒀다.
 - 태그는 입력한 대소문자 그대로 표시된다(`capitalizeListTitles = false`).
-- 홈 RSS(`/index.xml`, `/en/index.xml`)에는 `posts`의 글만 들어간다(`layouts/home.rss.xml`). Hugo 기본 RSS는 소개·통계 같은 고정 페이지도 글처럼 담는다.
+- 홈 RSS(`/index.xml`, `/en/index.xml`)에는 `posts`의 글만 들어간다(`layouts/rss.xml`). Hugo 기본 RSS는 소개·통계 같은 고정 페이지도 글처럼 담는다.

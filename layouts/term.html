@@ -3,6 +3,8 @@
 <p class="page-kicker"><a href="{{ "series/" | relLangURL }}">{{ i18n "tabSeries" }}</a></p>
 <h1 class="page-title">{{ .Title }}</h1>
 {{ with .Description }}<p class="page-desc">{{ . }}</p>{{ end }}
+{{- /* 시리즈별 피드: 이 시리즈의 새 글만 받아 보고 싶은 독자용 (layouts/rss.xml) */}}
+{{ with .OutputFormats.Get "rss" }}<p class="page-feed"><a href="{{ .RelPermalink }}" type="application/rss+xml">{{ i18n "seriesFeed" }}</a></p>{{ end }}
 {{ else }}
 <p class="page-kicker"><a href="{{ "tags/" | relLangURL }}">{{ i18n "tags" }}</a></p>
 <h1 class="page-title">#{{ .Title }}</h1>

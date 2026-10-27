@@ -10,6 +10,7 @@
   --led-off: #8fa397;
   --line: #d9dedb;
   --code-bg: #f2f4f3;
+  --code-str: #8a4b0f;
   --notice-bg: #eef3f0;
   --ad-bg: #fff1c7;
   --radius: 2px;
@@ -29,6 +30,8 @@
     --led-off: #6f8378;
     --line: #2a322e;
     --code-bg: #1b211e;
+  --code-str: #e3b77a;
+    --code-str: #e3b77a;
     --notice-bg: #18221d;
     --ad-bg: #3a2f12;
     color-scheme: dark;
@@ -160,9 +163,15 @@ a {
   box-shadow: 0 0 0 2px rgb(184 243 74 / 0.18), 0 0 8px rgb(184 243 74 / 0.55);
 }
 
+/* Pi는 살아 있지만 Huninn이 멈춤: 켜진 색의 속 빈 고리. 채움 여부로 정상과 구분된다 */
+.dot[data-state="warn"] {
+  border-color: var(--led);
+}
+
 .band-time {
   opacity: 0.8;
 }
+
 
 /* 머리글과 메뉴 */
 .site-header {
@@ -236,6 +245,18 @@ a {
   font-weight: inherit;
 }
 
+/* 아직 글이 없는 시리즈: 링크가 아니라 흐린 글자 */
+.chips .chip-soon {
+  margin: 0;
+  color: var(--graphite);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.chips .chip-soon span {
+  font-family: var(--sans);
+}
+
 /* inline-block이라 링크 밑줄이 글 수까지 이어지지 않는다 */
 .chips span {
   display: inline-block;
@@ -269,6 +290,15 @@ main > .page-title:first-child {
 
 .page-desc {
   margin: 0 0 1.5rem;
+  color: var(--graphite);
+}
+
+.page-feed {
+  margin: -0.5rem 0 1.5rem;
+  font-size: 0.85rem;
+}
+
+.page-feed a {
   color: var(--graphite);
 }
 
@@ -430,6 +460,48 @@ main > .page-title:first-child {
   line-height: 1.4;
 }
 
+/* 소제목 옆 절 링크: 평소엔 숨기고 소제목에 마우스를 올리거나 그 절로 왔을 때만 보인다 */
+.h-anchor {
+  margin-left: 0.25em;
+  color: var(--graphite);
+  font-family: var(--mono);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+}
+
+:is(h2, h3):hover > .h-anchor,
+:is(h2, h3):target > .h-anchor {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .h-anchor {
+    display: none;
+  }
+}
+
+.toc {
+  margin: 0 0 2rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.toc summary {
+  color: var(--graphite);
+  cursor: pointer;
+}
+
+.toc ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.toc li {
+  margin: 0.2rem 0;
+}
+
 .post-body img {
   max-width: 100%;
   height: auto;
@@ -437,6 +509,7 @@ main > .page-title:first-child {
 
 .fig {
   margin: 1.75rem 0;
+  scroll-margin-top: 1.5rem; /* 그림 출처 목록에서 건너올 때 위에 붙지 않게 */
 }
 
 .fig img,
@@ -485,6 +558,34 @@ pre {
   line-height: 1.5;
 }
 
+/* 코드 강조(Hugo Chroma, hugo.toml markup.highlight.noClasses = false). 데이터시트처럼 색은 셋만:
+   주석은 보조 글자색, 키워드·내장 이름은 배선 초록, 문자열·숫자는 갈색. 나머지는 본문색 */
+.highlight pre {
+  color: var(--ink);
+}
+
+.chroma :is(.c, .c1, .ch, .cm, .cp, .cpf, .cs) {
+  color: var(--graphite);
+  font-style: italic;
+}
+
+.chroma :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .nb, .bp, .ow) {
+  color: var(--trace);
+}
+
+.chroma :is(.s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .dl, .m, .mb, .mf, .mh, .mi, .il, .mo) {
+  color: var(--code-str);
+}
+
+.chroma .err {
+  color: inherit;
+}
+
+.chroma .hl {
+  display: block;
+  background: var(--notice-bg);
+}
+
 /* 표는 좁은 화면에서 표만 가로로 스크롤한다 */
 /* 표: 데이터시트처럼 가로 괘선만. 위아래 굵은 선, 머리는 고정폭 */
 .post-body table {
@@ -518,15 +619,77 @@ pre {
   border-bottom: 0;
 }
 
-.post-sources {
+.post-sources,
+.post-figures {
   margin-top: 2.5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   font-size: 0.95rem;
 }
 
-.post-sources h2 {
+.post-sources h2,
+.post-figures h2 {
   font-size: 1rem;
+}
+
+/* 발행 기록: 데이터시트의 측정 조건 표처럼. 숫자는 자리를 맞추고, 고정폭은 사이클 ID에만(한글에는 쓰지 않는다) */
+.post-receipt {
+  margin-top: 2.5rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--ink);
+  font-size: 0.9rem;
+}
+
+.post-receipt h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.post-receipt dl {
+  margin: 0;
+}
+
+.post-receipt dl > div {
+  display: flex;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-receipt dt {
+  flex: 0 0 9rem;
+  color: var(--graphite);
+}
+
+.post-receipt dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.post-receipt .mono {
+  font-family: var(--mono);
+}
+
+@media (max-width: 560px) {
+  .post-receipt dt {
+    flex-basis: 7rem;
+  }
+}
+
+.post-history {
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+}
+
+.post-history a {
+  color: var(--graphite);
+}
+
+.receipt-note {
+  margin: 0.6rem 0 0;
+  color: var(--graphite);
+  font-size: 0.85rem;
 }
 
 .series-box {
@@ -598,6 +761,16 @@ pre {
   font-variant-numeric: tabular-nums;
 }
 
+/* Huninn 마지막 실행: 숫자 칸이 아니라 한 줄 문장이라 줄 전체를 쓰고, 한글이라 고정폭을 쓰지 않는다 */
+.pi-grid .pi-cycle-row {
+  grid-column: 1 / -1;
+}
+
+.pi-grid dd.pi-cycle {
+  font-family: var(--sans);
+  font-size: 1rem;
+}
+
 .pi-note {
   margin: 0.75rem 0 0;
   color: var(--graphite);
@@ -607,6 +780,14 @@ pre {
 /* 404 */
 .hero {
   padding: 3rem 0 1.5rem;
+}
+
+.rows-title {
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--graphite);
+  font-size: 0.95rem;
 }
 
 .hero h1 {
@@ -622,9 +803,75 @@ pre {
   font-size: 0.875rem;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+}
+
+.footer-links a {
+  color: inherit;
+}
+
 @media (max-width: 560px) {
 
   .pi-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 인쇄·PDF 저장: 글만 남긴다. 상태 띠·메뉴·소제목 # 링크·접힌 목차는 종이에서 쓸모가 없다.
+   다크 모드로 보던 중이어도 흰 종이에 검은 글자로 찍는다. 링크는 주소를 괄호로 붙인다 */
+@media print {
+  .band,
+  .skip,
+  .nav,
+  .lang-switch,
+  .h-anchor,
+  .toc,
+  .pager,
+  .chips,
+  .page-feed,
+  .post-history,
+  .footer-links {
+    display: none !important;
+  }
+
+  /* 다크 모드 블록(:root:not([data-theme="light"]))과 같은 세기라 파일에서 뒤에 있는 이쪽이 이긴다 */
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
+    --paper: #fff;
+    --ink: #000;
+    --graphite: #444;
+    --trace: #1a6b45;
+    --line: #bbb;
+    --code-bg: #f2f4f3;
+    --code-str: #8a4b0f;
+    --notice-bg: #eef3f0;
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .post-body a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: var(--graphite);
+    overflow-wrap: anywhere;
+  }
+
+  .post-body pre,
+  .fig,
+  .post-receipt {
+    break-inside: avoid;
+  }
+
+  .post-body h2,
+  .post-body h3 {
+    break-after: avoid;
   }
 }
