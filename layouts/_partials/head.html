@@ -25,6 +25,10 @@
 {{- with slice (resources.Get "css/fonts.css") (resources.Get "css/main.css") | resources.Concat "css/site.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
 {{- end }}
+{{- /* 상태 띠 스크립트. 인라인 스크립트가 없어야 CSP(script-src 'self')를 걸 수 있다 */}}
+{{- with resources.Get "js/status.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end }}
 {{- with .OutputFormats.Get "rss" }}
 <link rel="alternate" type="application/rss+xml" title="{{ if $.IsHome }}{{ site.Title }}{{ else }}{{ $.Title }} · {{ site.Title }}{{ end }}" href="{{ .Permalink }}">
 {{- end }}

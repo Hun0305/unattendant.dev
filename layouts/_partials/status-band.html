@@ -1,10 +1,10 @@
 {{- /*
   모든 페이지 맨 위의 Pi 상태 띠.
-  값은 Pi가 몇 분마다 갱신하는 /status.json을 브라우저가 읽어 채운다(status-script.html).
+  값은 Pi가 몇 분마다 갱신하는 /status.json을 브라우저가 읽어 채운다(assets/js/status.js).
   파일이 없거나 읽지 못하면 "운영 준비 중"만 보인다. 30분 넘게 갱신이 없으면 회색 점과 "갱신 멈춤".
   연속 무인 운영일(unattended_days)이 아직 없으면 무인 운영 전이라는 뜻이라, 값과 함께 "운영 준비 중"을 그대로 둔다.
 */ -}}
-<div class="band" data-status>
+<div class="band" data-status data-t-stale="{{ i18n "bandStale" }}">
   <div class="wrap band-in">
     <span class="dot" data-status-dot aria-hidden="true"></span>
     <span class="band-idle" data-status-idle data-keep-until="unattended_days">{{ i18n "bandIdle" }}</span>

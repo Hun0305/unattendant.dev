@@ -44,6 +44,7 @@ piIdle = "Pi 상태를 불러오지 못했습니다. 몇 분마다 갱신되니 
 piUpdated = "마지막 갱신"
 feed = "RSS 구독"
 sourceCode = "운영 코드 (GitHub)"
+piLoading = "Pi 상태를 불러오는 중입니다."
 toc = "목차"
 receiptTitle = "발행 기록"
 receiptCycle = "사이클"

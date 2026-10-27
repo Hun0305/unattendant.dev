@@ -11,7 +11,7 @@
       <div data-k-wrap><dt>{{ i18n "piUptime" }}</dt><dd data-k="uptime_s">—</dd></div>
       <div data-k-wrap><dt>{{ i18n "piDisk" }}</dt><dd data-k="disk_free_pct">—</dd></div>
     </dl>
-    <p class="pi-note"><span data-status-idle>{{ i18n "piIdle" }}</span> <span data-k-wrap hidden>{{ i18n "piUpdated" }} <span data-k="updated"></span></span></p>
+    <p class="pi-note"><span data-status-idle data-fail="{{ i18n "piIdle" }}">{{ i18n "piLoading" }}</span> <span data-k-wrap hidden>{{ i18n "piUpdated" }} <span data-k="updated"></span></span></p>
   </section>
   <div class="post-body">
     {{ .Content }}
