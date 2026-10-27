@@ -87,6 +87,8 @@ Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops
 
 무인 운영 전에는 Pi가 `updated`, `cpu_temp_c`, `mem_used_gb`, `mem_total_gb`, `uptime_s`, `disk_free_pct`만 쓴다. `unattended_days`가 없으면 띠가 값을 보이면서 "운영 준비 중"도 같이 둔다. `unattended_days`와 `cost_today_krw`는 개입 기록과 환율이 정해진 뒤에 더하고, 그때부터 "운영 준비 중"이 사라진다.
 
+`cycle`은 Huninn의 마지막 정규 사이클(시험 실행 제외)이다. `at`(시각)과 `ok`(성공 여부)뿐이고, 실패면 `fail_streak`(연속 실패 횟수)와 `failing_since`(그 첫 실패 시각)가 붙는다. 오류 문장은 담지 않는다. 실패했거나 26시간 넘게 돌지 않았으면 띠가 "운영 준비 중" 대신 "Huninn 멈춤 · 10월 17일부터 11회 연속 실패"나 "Huninn 실행 지연 · 마지막 10월 25일"을 띄우고, 점은 속 빈 초록 고리가 된다(Pi는 살아 있지만 Huninn이 멈춤). 통계 탭에는 "Huninn 마지막 실행" 줄이 생긴다(2026-10-27).
+
 ```json
 {
   "updated": "2026-10-06T14:05:00+09:00",
@@ -96,7 +98,8 @@ Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops
   "mem_used_gb": 1.3,
   "mem_total_gb": 3.8,
   "uptime_s": 352800,
-  "disk_free_pct": 72
+  "disk_free_pct": 72,
+  "cycle": {"at": "2026-10-27T14:00:17+09:00", "ok": false, "fail_streak": 11, "failing_since": "2026-10-17T14:00:14+09:00"}
 }
 ```
 

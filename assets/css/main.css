@@ -163,9 +163,15 @@ a {
   box-shadow: 0 0 0 2px rgb(184 243 74 / 0.18), 0 0 8px rgb(184 243 74 / 0.55);
 }
 
+/* Pi는 살아 있지만 Huninn이 멈춤: 켜진 색의 속 빈 고리. 채움 여부로 정상과 구분된다 */
+.dot[data-state="warn"] {
+  border-color: var(--led);
+}
+
 .band-time {
   opacity: 0.8;
 }
+
 
 /* 머리글과 메뉴 */
 .site-header {
@@ -753,6 +759,16 @@ pre {
   font-size: 1.2rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+/* Huninn 마지막 실행: 숫자 칸이 아니라 한 줄 문장이라 줄 전체를 쓰고, 한글이라 고정폭을 쓰지 않는다 */
+.pi-grid .pi-cycle-row {
+  grid-column: 1 / -1;
+}
+
+.pi-grid dd.pi-cycle {
+  font-family: var(--sans);
+  font-size: 1rem;
 }
 
 .pi-note {

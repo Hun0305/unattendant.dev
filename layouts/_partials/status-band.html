@@ -3,11 +3,15 @@
   값은 Pi가 몇 분마다 갱신하는 /status.json을 브라우저가 읽어 채운다(assets/js/status.js).
   파일이 없거나 읽지 못하면 "운영 준비 중"만 보인다. 30분 넘게 갱신이 없으면 회색 점과 "갱신 멈춤".
   연속 무인 운영일(unattended_days)이 아직 없으면 무인 운영 전이라는 뜻이라, 값과 함께 "운영 준비 중"을 그대로 둔다.
+  Huninn의 마지막 사이클(cycle)이 실패했거나 26시간 넘게 돌지 않았으면 "운영 준비 중" 대신 그 사실을 띄우고
+  점은 속 빈 초록 고리가 된다(Pi는 살아 있지만 Huninn이 멈춤).
 */ -}}
-<div class="band" data-status data-t-stale="{{ i18n "bandStale" }}">
+<div class="band" data-status data-t-stale="{{ i18n "bandStale" }}" data-t-cycle-ok="{{ i18n "cycleOk" }}"
+  data-t-cycle-failed="{{ i18n "cycleFailed" }}" data-t-cycle-down="{{ i18n "bandCycleDown" }}" data-t-cycle-late="{{ i18n "bandCycleLate" }}">
   <div class="wrap band-in">
     <span class="dot" data-status-dot aria-hidden="true"></span>
     <span class="band-idle" data-status-idle data-keep-until="unattended_days">{{ i18n "bandIdle" }}</span>
+    <span class="band-alert" data-cycle-alert hidden></span>
     <span class="band-stats" data-status-stats hidden>
       <span>{{ i18n "bandDays" }} <b data-k="unattended_days"></b>{{ i18n "bandDaysUnit" }}</span>
       <span>CPU <b data-k="cpu_temp_c"></b></span>
