@@ -42,5 +42,6 @@ piIdle = "The Pi's status isn't available right now. It updates every few minute
 piUpdated = "Last update"
 feed = "RSS feed"
 sourceCode = "Source code (GitHub)"
+koreanOriginal = "Read the original in Korean"
 toc = "Contents"
 seriesFeed = "Subscribe to this series (RSS)"
