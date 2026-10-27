@@ -3,6 +3,10 @@
 <title>{{ if eq .Kind "404" }}{{ i18n "notFound" }} · {{ site.Title }}{{ else if .IsHome }}{{ site.Title }} — {{ site.Params.tagline }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
+{{- /* 글이 아직 없는 시리즈·태그 페이지는 "글 없음" 안내뿐이라 색인하지 않는다(Soft 404). 사이트맵에서도 뺀다(sitemap.xml) */}}
+{{- if and (eq .Kind "term") (not .Pages) }}
+<meta name="robots" content="noindex">
+{{- end }}
 {{- range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
 {{- end }}
