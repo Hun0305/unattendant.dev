@@ -803,3 +803,59 @@ pre {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* 인쇄·PDF 저장: 글만 남긴다. 상태 띠·메뉴·소제목 # 링크·접힌 목차는 종이에서 쓸모가 없다.
+   다크 모드로 보던 중이어도 흰 종이에 검은 글자로 찍는다. 링크는 주소를 괄호로 붙인다 */
+@media print {
+  .band,
+  .skip,
+  .nav,
+  .lang-switch,
+  .h-anchor,
+  .toc,
+  .pager,
+  .chips,
+  .page-feed,
+  .post-history,
+  .footer-links {
+    display: none !important;
+  }
+
+  /* 다크 모드 블록(:root:not([data-theme="light"]))과 같은 세기라 파일에서 뒤에 있는 이쪽이 이긴다 */
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme="dark"] {
+    --paper: #fff;
+    --ink: #000;
+    --graphite: #444;
+    --trace: #1a6b45;
+    --line: #bbb;
+    --code-bg: #f2f4f3;
+    --code-str: #8a4b0f;
+    --notice-bg: #eef3f0;
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .post-body a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: var(--graphite);
+    overflow-wrap: anywhere;
+  }
+
+  .post-body pre,
+  .fig,
+  .post-receipt {
+    break-inside: avoid;
+  }
+
+  .post-body h2,
+  .post-body h3 {
+    break-after: avoid;
+  }
+}
