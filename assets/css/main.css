@@ -491,6 +491,7 @@ main > .page-title:first-child {
 
 .fig {
   margin: 1.75rem 0;
+  scroll-margin-top: 1.5rem; /* 그림 출처 목록에서 건너올 때 위에 붙지 않게 */
 }
 
 .fig img,
@@ -600,14 +601,16 @@ pre {
   border-bottom: 0;
 }
 
-.post-sources {
+.post-sources,
+.post-figures {
   margin-top: 2.5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   font-size: 0.95rem;
 }
 
-.post-sources h2 {
+.post-sources h2,
+.post-figures h2 {
   font-size: 1rem;
 }
 

@@ -27,6 +27,7 @@
     </ul>
   </section>
   {{ end }}
+  {{ partial "post-figure-credits.html" . }}
   {{ partial "post-receipt.html" . }}
   {{- /* 사이트 레포가 공개라 글 원본과 고친 이력(정정 포함)을 누구나 볼 수 있다 */}}
   {{- with .File }}
