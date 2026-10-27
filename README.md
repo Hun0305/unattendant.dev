@@ -27,6 +27,7 @@ sponsored: true             # 선택. 제휴 링크·협찬이 있으면 글 맨
 sources:                    # 선택. 글 끝 "출처" 목록
   - title: "측정 원본 CSV"
     url: "https://github.com/Hun0305/unattendant/blob/main/experiments/..."
+receipt: {...}              # 직접 쓰지 않는다. Huninn의 publish_post가 넣는 발행 기록(글 하단 "발행 기록"). 그 전 글은 운영 레포 `review receipts`가 만든 줄(backfilled)
 ---
 ```
 

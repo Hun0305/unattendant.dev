@@ -611,6 +611,66 @@ pre {
   font-size: 1rem;
 }
 
+/* 발행 기록: 데이터시트의 측정 조건 표처럼. 숫자는 자리를 맞추고, 고정폭은 사이클 ID에만(한글에는 쓰지 않는다) */
+.post-receipt {
+  margin-top: 2.5rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--ink);
+  font-size: 0.9rem;
+}
+
+.post-receipt h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.post-receipt dl {
+  margin: 0;
+}
+
+.post-receipt dl > div {
+  display: flex;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-receipt dt {
+  flex: 0 0 9rem;
+  color: var(--graphite);
+}
+
+.post-receipt dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.post-receipt .mono {
+  font-family: var(--mono);
+}
+
+@media (max-width: 560px) {
+  .post-receipt dt {
+    flex-basis: 7rem;
+  }
+}
+
+.post-history {
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+}
+
+.post-history a {
+  color: var(--graphite);
+}
+
+.receipt-note {
+  margin: 0.6rem 0 0;
+  color: var(--graphite);
+  font-size: 0.85rem;
+}
+
 .series-box {
   margin-top: 2.5rem;
   padding: 1rem 1.25rem;
