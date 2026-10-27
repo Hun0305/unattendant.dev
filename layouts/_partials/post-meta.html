@@ -3,6 +3,10 @@
   {{- if gt .Lastmod.Unix .Date.Unix }}
   <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ i18n "updated" }} {{ .Lastmod | time.Format "2006-01-02" }}</time>
   {{- end }}
+  {{- /* 읽는 시간: 한국어는 띄어쓰기 단위가 영어 단어와 달라 글자 수(공백 제외) ÷ 500자/분, 영어는 Hugo 기본(213단어/분) */}}
+  {{- $min := .ReadingTime }}
+  {{- if eq .Language.Lang "ko" }}{{ $min = math.Ceil (div (float (countrunes .Plain)) 500) | int }}{{ end }}
+  <span>{{ i18n "readingTime" (math.Max 1 $min | int) }}</span>
   {{- with .GetTerms "series" }}{{ range first 1 . }}
   <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}{{ end }}
   {{- with .GetTerms "tags" }}
