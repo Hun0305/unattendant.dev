@@ -103,4 +103,4 @@ Pi가 5분마다 쓴다(운영 레포의 `huninn-status.timer`와 `agent/blogops
 - 글이 하나도 없으면 `/posts/` 페이지는 생성되지 않고(404), 홈에는 "아직 발행된 글이 없습니다"가 보인다.
 - 명령어 옵션(`--cpu`)이 대시로 바뀌지 않도록 마크다운 자동 치환(typographer)을 꺼 뒀다.
 - 태그는 입력한 대소문자 그대로 표시된다(`capitalizeListTitles = false`).
-- 홈 RSS(`/index.xml`, `/en/index.xml`)에는 `posts`의 글만 들어간다(`layouts/home.rss.xml`). Hugo 기본 RSS는 소개·통계 같은 고정 페이지도 글처럼 담는다.
+- 홈 RSS(`/index.xml`, `/en/index.xml`)에는 `posts`의 글만 들어간다(`layouts/rss.xml`). Hugo 기본 RSS는 소개·통계 같은 고정 페이지도 글처럼 담는다.

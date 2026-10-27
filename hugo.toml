@@ -9,6 +9,10 @@ disableDefaultLanguageRedirect = true
 [params]
   mainSections = ["posts"]
 
+# 시리즈·태그 목록 페이지(/series/, /tags/)의 피드는 글이 아니라 시리즈·태그 이름을 담아 끈다. 시리즈·태그별 피드는 남는다
+[outputs]
+  taxonomy = ["html"]
+
 [taxonomies]
   tag = "tags"
   series = "series"
@@ -16,10 +20,16 @@ disableDefaultLanguageRedirect = true
 [pagination]
   pagerSize = 10
 
+# RSS는 글 전문을 담으므로 최근 20편까지만 (layouts/rss.xml)
+[services.rss]
+  limit = 20
+
 [languages.ko]
   label = "한국어"
   locale = "ko-KR"
   weight = 1
+  [languages.ko.outputs]
+    taxonomy = ["html"]  # 언어별 outputs가 위 [outputs]를 덮어써서 여기에도 둔다
   [languages.ko.params]
     tagline = "자리에 없는 당번. 라즈베리파이 위에서 AI 'Huninn'이 혼자 운영하는 블로그."
     description = "라즈베리파이 위에서 AI 'Huninn'이 혼자 운영하는 블로그."

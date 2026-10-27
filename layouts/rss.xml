@@ -1,0 +1,77 @@
+{{- /*
+  모든 RSS: 홈(/index.xml, /en/index.xml), 시리즈·태그별(/series/pi-llm/index.xml 등), 글 목록(/posts/index.xml).
+  Hugo v0.167.0 내장 rss.xml을 옮겨 아래만 바꿨다. 시리즈·태그 목록 자체(/series/, /tags/)의 피드는 hugo.toml outputs에서 끈다
+  1. 글만 담는다: 내장 템플릿은 site.RegularPages라 소개·통계 같은 고정 페이지도 글처럼 들어갔다.
+     홈은 사이트 전체 글, 시리즈·태그·글 목록은 그 페이지의 글. 피드 제목에 시리즈·태그 이름을 붙인다
+  2. lastBuildDate는 담는 글 중 가장 최근 수정일로, 글이 없으면 생략한다
+  3. 전문을 담는다(content:encoded): 피드 리더에서 바로 읽게. 글 수는 hugo.toml services.rss.limit
+     요약(description)은 글의 front matter description(없으면 본문 앞부분의 글자만)이다.
+     피드 리더는 사이트 CSS가 없어 소제목 옆 # 링크(render-heading.html)가 글자로 보이므로 빼고, /로 시작하는 링크·그림 주소는 사이트 주소를 붙인다
+*/ -}}
+{{- $authorEmail := "" }}
+{{- with site.Params.author }}
+	{{- if reflect.IsMap . }}
+		{{- with .email }}
+			{{- $authorEmail = . }}
+		{{- end }}
+	{{- end }}
+{{- end }}
+
+{{- $authorName := "" }}
+{{- with site.Params.author }}
+	{{- if reflect.IsMap . }}
+		{{- with .name }}
+			{{- $authorName = . }}
+		{{- end }}
+	{{- else }}
+		{{- $authorName = . }}
+	{{- end }}
+{{- end }}
+
+{{- $pages := where site.RegularPages "Section" "in" site.Params.mainSections }}
+{{- if not .IsHome }}{{ $pages = where .RegularPages "Section" "in" site.Params.mainSections }}{{ end }}
+{{- $pages = $pages.ByDate.Reverse }}
+{{- $title := site.Title }}
+{{- if not .IsHome }}{{ $title = printf "%s · %s" .Title site.Title }}{{ end }}
+{{- $limit := .Site.Config.Services.RSS.Limit }}
+{{- if ge $limit 1 }}
+	{{- $pages = $pages | first $limit }}
+{{- end }}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+	<channel>
+		<title>{{ $title }}</title>
+		<link>{{ .Permalink }}</link>
+		<description>{{ (cond .IsHome site.Params.description (.Description | default site.Params.description)) | transform.XMLEscape | safeHTML }}</description>
+		<generator>Hugo</generator>
+		<language>{{ site.Language.Locale }}</language>
+		{{ with $authorEmail }}
+			<managingEditor>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>
+		{{ end }}
+		{{ with $authorEmail }}
+			<webMaster>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</webMaster>
+		{{ end }}
+		{{ with .Site.Copyright }}
+			<copyright>{{ . }}</copyright>
+		{{ end }}
+		{{- range first 1 $pages.ByLastmod.Reverse }}
+			<lastBuildDate>{{ .Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+		{{- end }}
+		{{- with .OutputFormats.Get "RSS" }}
+			{{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+		{{- end }}
+		{{- range $pages }}
+			<item>
+				<title>{{ .Title }}</title>
+				<link>{{ .Permalink }}</link>
+				<pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+				{{- with $authorEmail }}<author>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</author>{{ end }}
+				<guid>{{ .Permalink }}</guid>
+				<description>{{ (.Description | default (.Summary | plainify)) | transform.XMLEscape | safeHTML }}</description>
+				{{- $content := .Content | replaceRE `\s*<a class="?h-anchor"?[^>]*>#</a>` "" }}
+				{{- $content = $content | replaceRE `(href|src)="/` (printf `$1="%s/` (strings.TrimSuffix "/" site.BaseURL)) }}
+				<content:encoded>{{ $content | transform.XMLEscape | safeHTML }}</content:encoded>
+			</item>
+		{{- end }}
+	</channel>
+</rss>

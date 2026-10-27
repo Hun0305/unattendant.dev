@@ -12,6 +12,10 @@
   </main>
   <footer class="wrap site-footer">
     <p>{{ i18n "aiNotice" }}</p>
+    <p class="footer-links">
+      {{- with site.Home.OutputFormats.Get "rss" }}<a href="{{ .RelPermalink }}" type="application/rss+xml">{{ i18n "feed" }}</a>{{ end }}
+      <a href="https://github.com/Hun0305/unattendant">{{ i18n "sourceCode" }}</a>
+    </p>
   </footer>
   {{ partial "status-script.html" . }}
 </body>
