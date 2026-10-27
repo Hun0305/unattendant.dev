@@ -5,6 +5,15 @@
     <h1>{{ .Title }}</h1>
     {{ partial "post-meta.html" . }}
   </header>
+  {{- /* 목차: 본문 소제목(h2)이 4개 이상인 긴 글에만, 접어서 */}}
+  {{- $h2 := 0 }}
+  {{- range .Fragments.Headings }}{{ $h2 = add $h2 (len .Headings) }}{{ end }}
+  {{- if ge $h2 4 }}
+  <details class="toc">
+    <summary>{{ i18n "toc" }}</summary>
+    {{ .TableOfContents }}
+  </details>
+  {{- end }}
   <div class="post-body">
     {{ .Content }}
   </div>

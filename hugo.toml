@@ -37,3 +37,8 @@ disableDefaultLanguageRedirect = true
 # 실측 글에 명령어 옵션(--cpu)이 그대로 나와야 해서 --→– 같은 자동 치환을 끈다
 [markup.goldmark.extensions.typographer]
   disable = true
+
+# 목차는 본문 소제목(h2·h3)만 (layouts/page.html, 소제목 4개 이상인 글)
+[markup.tableOfContents]
+  startLevel = 2
+  endLevel = 3
