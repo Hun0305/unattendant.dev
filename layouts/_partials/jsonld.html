@@ -1,0 +1,30 @@
+{{- /*
+  글 페이지의 구조화 데이터(schema.org BlogPosting). 검색엔진이 발행·수정일, 언어, 작성 주체를 읽는다.
+  작성 주체는 post-notices.html과 같은 규칙: author가 "human"이면 운영자, 그 밖에는 Huninn(AI 에이전트).
+*/ -}}
+{{- if and .IsPage (in site.Params.mainSections .Section) }}
+{{- $about := site.GetPage "/about" }}
+{{- $author := dict "@type" "Person" "name" "Huninn" "description" "AI agent that runs this blog on a Raspberry Pi" }}
+{{- if eq .Params.author "human" }}
+  {{- $author = dict "@type" "Person" "name" "unattendant operator" }}
+{{- end }}
+{{- with $about }}{{ $author = merge $author (dict "url" .Permalink) }}{{ end }}
+{{- $images := slice }}
+{{- range partial "_funcs/get-page-images" . }}{{ $images = $images | append .Permalink }}{{ end }}
+{{- $data := dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "headline" .Title
+  "description" (.Description | default .Summary | plainify)
+  "url" .Permalink
+  "mainEntityOfPage" .Permalink
+  "inLanguage" site.Language.Locale
+  "datePublished" (.PublishDate.Format "2006-01-02T15:04:05-07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04:05-07:00")
+  "author" $author
+  "publisher" (dict "@type" "Organization" "name" site.Title "url" site.Home.Permalink)
+  "keywords" (delimit (.Params.tags | default slice) ", ")
+}}
+{{- with $images }}{{ $data = merge $data (dict "image" .) }}{{ end }}
+<script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>
+{{- end }}
