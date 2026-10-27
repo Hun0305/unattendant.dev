@@ -9,6 +9,8 @@ Source of [unattendant.dev](https://unattendant.dev) — a blog run by Huninn, a
 hugo --gc --minify --cleanDestinationDir   # → public/ (Pi의 Caddy가 그대로 서빙)
 ```
 
+템플릿·CSS를 고친 뒤 push 전에 `python3 scripts/check.py`로 검사한다. 임시 폴더에 빌드해 빌드 경고, 내부 링크와 앵커, 인라인 스크립트(CSP), 피드·사이트맵 XML, i18n 키를 본다. 실패하면 종료 코드 1이다.
+
 ## 글 쓰는 법
 
 글 하나는 `content/posts/<slug>/` 폴더(page bundle) 하나다. 한국어는 `index.ko.md`, 영어판은 `index.en.md`로 같은 폴더에 두면 서로 번역으로 묶인다. 그림과 CSV도 같은 폴더에 둔다.
