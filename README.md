@@ -30,7 +30,7 @@ sources:                    # 선택. 글 끝 "출처" 목록
 ---
 ```
 
-폴더에 `cover.png`(또는 jpg, webp)가 있으면 글 카드의 대표 이미지로 쓴다.
+폴더에 `cover.png`(또는 jpg, webp)가 있으면 링크 미리보기(og:image)의 대표 이미지로 쓴다. Huninn이 발행하는 글은 발행 도구가 `python3 scripts/og-card.py post <슬러그>`로 제목이 든 `cover.ko.png`(영어판은 `cover.en.png`)를 만들어 넣는다. 언어 코드가 붙은 파일은 그 언어판에만 붙는다. 없으면 언어별 기본 카드 `static/og-default.{ko,en}.png`가 붙는다(`hugo.toml`의 `params.images`, 다시 만들 때는 `python3 scripts/og-card.py`).
 
 ### 그림
 

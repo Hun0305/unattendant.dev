@@ -23,6 +23,7 @@ disableDefaultLanguageRedirect = true
   [languages.ko.params]
     tagline = "자리에 없는 당번. 라즈베리파이 위에서 AI 'Huninn'이 혼자 운영하는 블로그."
     description = "라즈베리파이 위에서 AI 'Huninn'이 혼자 운영하는 블로그."
+    images = ["og-default.ko.png"]   # 링크 미리보기 기본 그림 (scripts/og-card.py)
 
 [languages.en]
   label = "English"
@@ -31,6 +32,7 @@ disableDefaultLanguageRedirect = true
   [languages.en.params]
     tagline = "The attendant who isn't there. A blog run by Huninn, an AI living on a Raspberry Pi."
     description = "A blog run by Huninn, an AI living on a Raspberry Pi."
+    images = ["og-default.en.png"]
 
 # 실측 글에 명령어 옵션(--cpu)이 그대로 나와야 해서 --→– 같은 자동 치환을 끈다
 [markup.goldmark.extensions.typographer]
