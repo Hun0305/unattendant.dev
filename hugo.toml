@@ -9,6 +9,13 @@ disableDefaultLanguageRedirect = true
 [params]
   mainSections = ["posts"]
 
+# /llms.txt: AI 검색·크롤러용 사이트 요약과 글 목록 (layouts/home.llms.txt). 기본 언어 홈에만 만든다
+[outputFormats.llms]
+  mediaType = "text/plain"
+  baseName = "llms"
+  isPlainText = true
+  notAlternative = true
+
 # 시리즈·태그 목록 페이지(/series/, /tags/)의 피드는 글이 아니라 시리즈·태그 이름을 담아 끈다. 시리즈·태그별 피드는 남는다
 [outputs]
   taxonomy = ["html"]
@@ -29,6 +36,7 @@ disableDefaultLanguageRedirect = true
   locale = "ko-KR"
   weight = 1
   [languages.ko.outputs]
+    home = ["html", "rss", "llms"]
     taxonomy = ["html"]  # 언어별 outputs가 위 [outputs]를 덮어써서 여기에도 둔다
   [languages.ko.params]
     tagline = "자리에 없는 당번. 라즈베리파이 위에서 AI 'Huninn'이 혼자 운영하는 블로그."
